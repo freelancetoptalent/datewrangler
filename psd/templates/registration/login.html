@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Poly Speed Dating Login
+{% endblock %}
+{% block header %}Login{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+<p><b>Error: Your Poly Speed Dating ID and password didn't match.</a> Please try again.</p>
+{% endif %}
+
+
+
+
+<p style="text-align: center; width:100%;max-width:550px;margin:auto;">Log in using with the ID and password we sent after you registered--the ID should be something like "AB123X".    <b>User names are case sensitive (and usually uppercase)!</b></p>
+
+
+<form method="post" action="{% url "account-login" %}" style="width: 100%; max-width: 500px; margin: 20px auto;">
+{% csrf_token %}
+
+<div style="display: flex;flex-direction: column; margin: 15px 0;">
+    {{ form.username.label_tag }}
+    {{ form.username }}
+</div>
+<div style="display: flex;flex-direction: column; margin: 15px 0;">
+    {{ form.password.label_tag }}
+    {{ form.password }}
+</div>
+<input type="submit" value="Sign in" style="width: 100%; height: 30px;background-color: rgba(15, 156, 191, 0.897);border: none;margin: 20px auto;color: #fff; display: flex; justify-content: center; font-size: 22px; border-radius: 7px; line-height: 19px;min-height: 35px;"/>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<p style="width: 100%; max-width: 1000px; margin:10px auto; text-align: center;">
+If you have forgotten your ID or your password, you can reset your password
+by going to the <a href="{% url "password-reset"  %}">Password Reset Page</a> and
+handing over your email address.  The system will then email you your username
+and a link to reset your password.
+
+<p style="width: 100%; max-width: 1000px; margin:10px auto; text-align: center;">
+
+PLEASE do this rather than making a new registration or emailing the staff if
+at all possible.  The former will mean you will possibly get dates with people
+you have seen before, the latter will negatively impact an already overworked
+technical support division.
+<script>
+
+    let inputUsername = document.getElementById('id_username')
+        inputUsername.style.height ='35px';
+        inputUsername.style.marginTop ='10px'
+        inputUsername.style.border ='1px solid #CCCCCC'
+        inputUsername.style.borderRadius ='7px'
+        inputUsername.style.boxShadow = '0px 1px 4px 2px rgb(197,211,217)'
+        inputUsername.style.padding = '0 10px'
+
+    let inputPass = document.getElementById('id_password')
+        inputPass.style.height ='35px';
+        inputPass.style.marginTop ='10px'
+        inputPass.style.border ='1px solid #CCCCCC'
+        inputPass.style.borderRadius ='7px'
+        inputPass.style.boxShadow = '0px 1px 4px 2px rgb(197,211,217)'
+        inputPass.style.padding = '0 10px'
+
+    let meta = document.createElement('meta');
+        meta.name = "viewport";
+        meta.content = "width=device-width, initial-scale=1.0";
+        document.head.appendChild(meta);
+    let labelUsername = inputUsername.previousElementSibling
+        labelUsername.style.fontSize = '16px'
+        labelUsername.style.fontWeight = '600'
+    let labelPass = inputPass.previousElementSibling
+        labelPass.style.fontSize = '16px'
+        labelPass.style.fontWeight = '600'
+</script>
+{% endblock %}
+

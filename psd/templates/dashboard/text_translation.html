@@ -1,0 +1,182 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Text Translation Form for {{ event_name }}{% endblock %}
+
+
+{% load util %}
+
+
+{% block header %}
+Text Translation Form
+{% endblock %}
+
+{% block content %}
+
+{% if error_message %}
+<h2>Error: {{error_message}}</h2>
+{% endif %}
+
+{% if explore_result %}
+<h1>Explore Snippit "{{snip}}"</h1>
+<table>
+<th>
+<td>RR
+<td>Text
+</th>
+{% for pr, tr in explore_result.items %}
+<tr>
+<td>
+{{forloop.counter}}
+<td>
+<a href={% url "edit-person"  psdid=pr.psdid %}>{{pr.psdid}}</a></li>
+<td>
+{{tr.comments}}
+</tr>
+{% endfor %}
+</table>
+
+{% endif %}
+<form name="checkform" method="post" action="">
+{% csrf_token %}
+{{checkform}}
+<br>
+<input type="submit" name="explore_submit" value="explore">
+
+<h1>Word List</h1>
+
+
+<table>
+<th>
+<td>Is
+<td>Is Not
+<td>Seek
+<td>Seek Not
+<td>Total
+<td>Word
+</th>
+
+{% for key, value in words %}
+<tr>
+<td>
+{{forloop.counter}}
+{% if value.isBase %}
+(b)
+{% endif %}
+{% if value.isMapped %}
+*
+<strike>
+{% endif %}
+
+<td>
+{{value.isC}}
+<td>
+{{value.isNotC}}
+<td>
+{{value.seekC}}
+<td>
+{{value.seekNotC}}
+<td>
+<b>{{value.totC}}</b>
+<td>
+{% if value.isMapped %}
+<strike>
+{{key}}
+</strike>
+{% else %}
+<b>{{key}}</b>
+{% endif %}
+
+<td>
+
+<form name="makelinkword" method="post" action="">
+{% csrf_token %}
+<input type="hidden" name="word" value="{{key}}">
+{% if value.base_word %}
+<td><input name="base_word" type="text" value="{{ value.base_word }}"></td>
+{% else %}
+<td><input name="base_word" type="text" value=""></td>
+{% endif %}
+<td><input type="submit" name="translate" value="map word"></td>
+<td><input type="submit" name="delete" value="delete link"></td>
+<td><input type="submit" name="explore" value="explore"></td>
+</form>
+
+
+
+</tr>
+ {% endfor %}
+</table>
+
+
+<p>
+&nbsp;
+<p>
+&nbsp;
+
+
+<h1>clean word list</h1>
+<h1>Word List</h1>
+
+
+<blockquote>
+
+{% for key, value in words %}
+{% if not value.isMapped %}
+<b>{{value.word_string}}</b> <br>
+{% endif %}
+ {% endfor %}
+
+</blockquote>
+
+
+
+
+
+
+<hr>
+
+{% comment %}
+
+<form name="transtext" method="post" action="">
+{% csrf_token %}
+<table>
+<tr><td>#</td>
+<td>base word</td>
+<td>synonym</td>
+
+{{ pformset.management_form }}
+{% for pform in pformset.forms %}
+<tr>
+<td>
+<h2>#{{ forloop.counter }}
+
+<td>
+{{ pform.base_word }}
+</td>
+<td>
+{{ pform.synonym }}
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+  <p align="center">
+    <input name="Submit" value="Make Links!" type="submit">
+    <br>
+  </p>
+
+</form>
+
+{% endcomment %}
+
+
+
+
+{% endblock %}
+
+
+

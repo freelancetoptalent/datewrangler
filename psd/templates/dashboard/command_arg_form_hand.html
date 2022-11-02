@@ -1,0 +1,105 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n util admin_modify admin_static %}
+
+{% block title %}
+{{command_title}}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% if not is_popup %}
+<div class="breadcrumbs">
+
+<a href="../../admin">{% trans "Home" %}</a>
+ &rsaquo;
+<a href="{% url "edit-event" event_name=event.event %}">Edit</a>
+ &rsaquo;
+<a href="{% url "event-manager" event_name=event.event %}">Manage</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="/admin/manage/{{ event_name }}">Manage</a></li>
+    <li><a href="history/" class="historylink">"History"</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+
+{% block header %}
+Event Manager for {{ event_name }}
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if not cformset.is_valid %}
+<!--<h3>Errors</h3>
+
+{% for field in cformset.forms.0 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #1:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in cformset.forms.1 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #2:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in cformset.forms.2 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #3:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+-->
+{% endif %}
+
+
+
+{% if information %}
+<hr>
+{{information|safe}}
+{% endif %}
+
+{% if results %}
+<hr>
+<h3>Results:</h3>
+{{results|safe}}
+<hr>
+{% endif %}
+
+<h2>Hand enter {{command_title}} for {{event}}</h2>
+
+<form action="" method="POST">
+{% csrf_token %}
+       <table>
+            {{ form.as_table }}
+     </table>
+
+
+<h2>And Now Cruises:</h2>
+<table>
+<tr>
+{{ cformset.management_form }}
+{% for cform in cformset.forms %}
+
+<td>
+<h3>#{{ forloop.counter }}
+
+<td>
+{{ cform.other_psdid }}
+
+{% endfor %}
+</tr>
+</table>
+
+        <p><input type="submit" value="{{button_name|default:"Submit"}}"></p>
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Volunteer Cruise Emailer{% endblock %}
+
+<h1 align="center">
+{% block header %}
+Volunteer Cruise Emailer
+{% endblock %}
+</h1>
+
+{% block content %}
+
+<h3> Volunteer Cruise Email for Event {{ event }} (Event Code '{{ event_name }}')</h3>
+
+{% if results %}
+PRIOR ACTION RESULTS:<p>
+{{ results|safe }}
+{% endif %}
+
+&nbsp;
+<br>
+<h2>This form is for emailing cruise contact info to a volunteer</h2>
+
+
+<form name="volunteer cruise email" method="post" action="">
+{% csrf_token %}
+<hr>
+
+<br>
+Volunteer's email: {{ form.volunteer_email }}<br>
+Who cruised this volunteer: {{ form.psdids }}<br>
+<br>
+Subject line: {{ form.subject }}<br>
+Email: {{ form.body }}<br>
+<br>
+Love,
+<br>
+PSD Robot #4
+<hr>
+
+Really send the email or just do a test-render? (Check means really send.)  {{form.really_send}}<p>
+
+<input type="submit" name="send_email" value="Send that email!">
+</form>
+
+{% endblock %}

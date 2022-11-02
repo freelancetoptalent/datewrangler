@@ -1,0 +1,52 @@
+{% extends 'admin/base_site.html' %}
+
+{% load i18n util admin_modify admin_static %}
+
+{% block title %}Event Manager for {{ event_name }}{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+
+<a href="{% url "admin:index" %}">{% trans "Home" %}</a>
+ &rsaquo;
+<a href="{% url "edit-event" event_name=event_name %}">Edit</a>
+ &rsaquo;
+<a href="{% url "event-manager" event_name=event_name %}">Manage</a>
+</div>
+{% endif %}{% endblock %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="/admin/manage/{{ event_name }}">Manage</a></li>
+    <li><a href="history/" class="historylink">"History"</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+
+{% block header %}
+Event Manager for {{ event_name }}
+{% endblock %}
+
+{% block content %}
+
+{{ results|safe }}
+
+
+<hr>
+
+{% for act in actions %}
+{% if act %}
+<p> <a href="{% url "event-action" event_name=event_name action=act.action %}">{{act.action_description}}</a>
+{% if act.argument_description %}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{act.argument_description}}
+{% endif %}
+{% else %}
+<hr>
+{% endif %}
+{% endfor %}
+
+<hr>
+
+{% endblock %}

@@ -1,0 +1,335 @@
+{% extends baseregform %}
+{% load util %}
+
+{% block header %}
+<h2 align="center">Registration Form (Group)</h2>
+{% endblock %}
+
+{% block formdescription %}
+<p align="left"><strong>Note: </strong>This is the group registration
+form, meaning you
+  want to go on dates as a member of a
+  set group (say you're an existing triad that is looking for a fourth).  If you want to go on dates as an individual, then fill in the
+ <a href="../individual/{{ event.event }}">other form</a>, and have any of your partners who are going do so as well.</p>
+{% endblock %}
+
+
+{% block form %}
+
+<form name="groupReg" method="post" action="">
+{{ pformset.management_form }}
+{% csrf_token %}
+  <p> </p>
+
+<p align="left"><strong>More on Group Dating: </strong>If you are a bit
+confused, read the <a
+href="{% url "about-page"  what="groups" %}" target="_blank">group examples</a>
+ to see what some of the choices might mean.
+
+</p><hr>
+
+  <h2>Desired group nametag name:     {{ rform.nickname }}
+</h2>
+  <p align="center">e.g. "Linda and Johanna"</p>
+
+  <h2>Contact email:
+    {{ rform.email }}
+  </h2>
+  <p align="center">
+  This email address will be given out when you successfully match
+      with someone and used for emails about this evening before and immediately after
+          the event. It will not be made public or shared for any other reason.</p>
+  <p align="center">
+    {{ rform.add_to_mailings }}
+    Yes, we want to hear about future Poly Speed Dating (or other
+related Poly
+    Social) events thrown by you folks.</p>
+
+<!--<h2>Previous ID Code (if any): {{ rform.previous_id }}</h2>
+  <p align="center">Did you attend a previous PSD event?  If so, enter
+in your most recent ID code so we can attempt to not re-match you with
+known dates (see the email sent to you about previous matches).  If not,
+ leave blank.</p>
+-->
+
+  <h2>Group Member Information:</h2>
+
+<p align="center">For each member in your group, fill out who they are
+and what they are looking for (if anything). We can currently handle groups of two
+people or three people; if there are two of you, leave the third form blank.</p>
+
+
+  <p align="center"><strong>Remember</strong>: <br>
+      Be open-minded! If you aren't interested in meeting a certain
+          type of person, don't say you are-- but leave yourself room to be
+	      surprised.</p>
+<p>
+<p align="center">Also, gender matching is complex.  We have attempted to design a system that is all-inclusive and celebratory of the full spectrum of what is possible.  Humans are complex
+and therefore there are a lot of checkboxes!  Please read the <a href="{% url "about-page"  what="gender" %}" target="_blank">help section</a> for more about what is going on here if you are at all confused.  Be aware, the sorts of people you are matched with
+depends a lot on what you do here.
+
+<br>
+
+{% for pform in pformset.forms %}
+<div class="person-form">
+
+<h2>person #<span class="forloop-counter">{{ forloop.counter }}</span>
+{% ifequal forloop.counter 3 %} (optional){% endifequal %}:</h2>
+<blockquote>
+Name (First, Last):    {{ pform.first_name }}
+    {{ pform.last_name }}
+<br>
+<p>Age: {{ pform.age }} years old
+<p>Kinky?: {{ pform.kinky }} (check if yes).  (<a href="{% url "about-page"  what="kink" %}" target="_blank">About the kinky option</a>)
+
+    <p>Acceptable age range for dates:  &nbsp; &nbsp; &nbsp; From
+      {{ pform.seek_age_min }}
+      to
+      {{ pform.seek_age_max }} years old.
+    </p>
+
+  <p>Acceptable kinkiness for dates:&nbsp;&nbsp;
+     {{ pform.seek_kinkiness }}
+
+  <p>Acceptable Monogomy:&nbsp;&nbsp;
+    {{pform.X_seek_monog}}
+
+</p>
+Gender and Sex (<a href="{% url "about-page"  what="gender" %}" target="_blank">help on this.</a>):
+
+<table align="center" cellspacing=0 cellpadding=0 width="90%">
+
+<tr>
+<td width="40%" valign="top">
+<b>Person #<span class="forloop-counter">{{forloop.counter}}</span> wants to date <i color="red">any</i> of the following:</b><br>
+
+</td>
+<td width="5%">
+</td>
+<td width="40%" valign="top">
+<b>Person #<span class="forloop-counter">{{forloop.counter}}</span>'s dates must be open to dating <i color="red">all</i> of the following:</b>
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+{{pform.seek_gender}}
+<ul style="list-style: none;">
+</td>
+
+<td width="5%">
+</td>
+
+<td valign="top">
+{{pform.gender}}
+</td>
+</tr>
+
+</table>
+
+<h3>Identity and Presentation: <a href="{% url "about-page"  what="identity" %}" target="_blank">(About the identity.)</a></h3>
+
+
+<table class="stat" align="center" cellspacing=0 cellpadding=0 width="90%">
+
+<tr>
+<td width="40%" valign="top">
+If possible, Person #<span class="forloop-counter">{{forloop.counter}}</span> prefers to date <i color="red">any</i> of...</b><br>
+
+</td>
+<td width="5%">
+</td>
+<td width="40%" valign="top">
+<b>For purposes of matching, Person #<span class="forloop-counter">{{forloop.counter}}</span> identifies as...</b>
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+{{pform.X_seek_identity}}
+
+</td>
+
+<td width="5%">
+</td>
+
+<td valign="top">
+{{pform.X_identity}}
+
+
+</table>
+
+
+
+  </blockquote>
+
+{% comment %}
+<!--{% if pform.extra_fields %}
+<h3>More questions...</h3>
+<table class="stat" align="center" cellspacing=0 cellpadding=0 width="90%">
+<tr>
+<td width=15%></td>
+<td width=5%></td>
+<td width=35%></td>
+<td width=35%></td>
+</tr>
+
+{% for q in pform.extra_fields %}
+
+{% if q.form_fields.1 %}
+<tr>
+<td><b>{{ q.question }}</b> <br> {{ q.explanation }}</td>
+<td></td>
+<td>I am open to people who answered...<br>{{ q.form_fields.1 }}</td>
+<td>My own answer...<br>{{ q.form_fields.0 }}</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3><hr></td>
+</tr>
+
+{% else %}
+
+<tr><td><b>{{ q.question }}</b> {{ q.explanation }}</td><td></td>
+<td></td>
+<td colspan=2>{{ q.form_fields.0 }}</td>
+<tr><td></td><td><hr></td></tr>
+{% endif %}
+
+</tr>{% endfor %}
+</table>
+{% endif %}
+!-->
+{% endcomment %}
+</div>
+{% endfor %}
+
+
+
+<h2>All or Any?</h2>
+<p align="center">Are you open to people who match at least one of your
+members, or do you need folks that match <em>all</em> of your members?
+<!-- Note that we will not consider those of your group who marked "none,"
+above, regardless of how you check off the following box.-->
+
+</p><blockquote>
+    <p>{{ rform.groups_match_all }}
+    We want folks that match all of us. (Leave unchecked to also meet people who match at least one of you.)
+
+</p></blockquote>
+
+<h2>Groups</h2>
+  <p align="center">As you know, some folks will be "dating"
+  as a group. This means you can have group-group dates!  Group-group
+  matching is very weird.  Your any/all selection (above)
+  determines how this works.  "Any" means your group matches if at
+  least one of you has a mutual interest with at least one of the
+  members in the other group.  "All" means your group matches only if all
+  of you have someone to match in the other group.  Of course, the
+  other group also specified the any/all option.  Thinking ahead, the
+  all-all option means all members of each group have a mutual match
+  with someone.  Any-any, on the other hand, might mean only one
+  member of each of the groups has a match.  An all-any could be one
+  person in the second group matches all the people in the first
+  group.  Get it?  Good.
+
+
+  </p><blockquote>
+   </p><p>
+      {{ rform.seek_groups }}
+      We are happy to date groups.  Crazy is great!
+</p>
+(Remember that this is Poly Speed Dating--just because you say no to
+dating a group does not mean the individuals you do end up dating do not
+ have pre-existing relationships.)
+</blockquote>
+
+<h2>Zones where you as a group would consider yourselves located</h2>
+    <p align="center">As a secondary consideration, we attempt to match
+you with people from similar geographical areas.  Check all that apply.</p>
+
+{{ rform.location }}
+
+<h2>Friends</h2>
+<p align="center">Due to the matching process, and depending on who
+registers, you may have slots in your schedule with no date.  During
+these times you can either socialize in the social area or, if you like,
+ have us attempt to schedule "friendship dates" with people who mutually
+ <em>do not</em> match you.  Would you like to have a few of these
+dates?
+  </p><blockquote>
+       {{ rform.friend_dates }}  We want some Friendship Dates.
+    <p></p>
+  </blockquote>
+
+
+
+
+{% if event.has_childcare %}
+<h2>Childcare:</h2>
+<p align="center">We are planning on providing childcare if at all possible.  Please let us know if you need those services.
+<p>
+{{ rform.wants_childcare }} Yes, I would love childcare for (please list names and ages of children):
+<p>
+<blockquote>
+  <blockquote>
+    <blockquote>
+{{ rform.children }}
+</blockquote></blockquote></blockquote>
+{% endif %}
+
+  <h2>Referral</h2>
+  <p>We were referred to PSD by:
+    {{ rform.referred_by }}
+  </p>
+  <p align="center">(Leave blank if no one, or you don't recall.)</p>
+<!--  <p> I know the following folks are also going, please do not match me with them:</p>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <p>
+              <textarea name="friends" cols="40" rows="3"></textarea>
+            </p>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+-->
+
+<h2>Mobility:</h2>
+  <p align="center"> If you would like to not have to move from table to table between dates due to mobility concerns,
+  please check the box below.  Note that this is not a matching criterion.
+<blockquote>
+
+            <p>
+<p>{{ rform.stationary }} I would like to be stationary.
+            </p>
+          </blockquote>
+
+
+  <h2>Comments/Remarks</h2>
+  <p align="center"> Anything to add?  Anything we should know?</p>
+            <p align="center">
+              {{ rform.comments }}
+            </p>
+
+
+
+  <p align="center">
+{% if admin_mode %}
+    <input type="submit" name="Submit_Group" value="Update/Register Reg Record">
+{% else %}
+    <input type="submit" name="Submit_Group" value="Register Us!">
+{% endif %}
+
+    <br>
+  </p>
+
+</blockquote></form>
+
+
+{% endblock %}

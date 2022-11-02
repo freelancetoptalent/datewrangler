@@ -1,0 +1,39 @@
+{% load util %}
+{% if message %}
+{{message|safe}}
+{%endif%}
+
+{% if rr.date_sheet_ever_said_yes %}
+YOUR MATCHES:
+{% if matches %}These are dates where you both said 'yes' on your date sheet. They'll have received your email address too.
+
+{% for m in matches %} * In round {{ m.round }} you matched {{ m.their_nick }}, {{ m.their_email }} (#{{m.their_psdid}}).
+{% endfor %}
+{% else %}    Unfortunately, you did not have any matches on your dates.
+{% endif %}{% if tried_friends %}
+YOUR FRIEND MATCHES:{% if fmatches %}
+These are people you had 'friendship dates' with. If you both said 'yes,' you're getting each other's info in this email.
+
+{% for m in fmatches %} * In round {{ m.round }} you matched {{ m.their_nick }}, {{ m.their_email }} (#{{m.their_psdid}}).
+{% endfor %}
+{% else %}
+You did not have any 'friend date' matches.{% endif %}
+{% endif %} {% else %}* You have no matches as you said no to all your dates.
+{% endif %}
+{% if cruises %}CRUISES:
+Cruises are people you didn't go on dates with who wanted you to have their contact info. They may or may not match your dating preferences. Who knows?  Feel free to email them. Your email address has not been shared with them.
+
+{% for c in cruises %} * {{c.their_nick}}, {{ c.their_email }} (#{{ c.their_psdid }}) cruised you.
+{% endfor %}
+{% endif %}{% if cmatches %}MUTUAL CRUISES: 
+Mutual cruises are when you cruised someone and they cruised you back. You both now have each other's email.  Go you!
+
+{% for c in cmatches %} * {{ c.their_nick }}, {{ c.their_email }} (#{{ c.their_psdid }}) cruised you.
+{% endfor %}{% endif %}
+
+{% if cruised_any %}For reference, you cruised the following people:
+
+{% for cr in you_cruised %} * {{cr.nick}} (#{{ cr.psdid }})
+(Non-dating volunteers will not be listed here in all cases.)
+{% endfor %}
+{% endif %}

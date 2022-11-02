@@ -1,0 +1,49 @@
+{% extends 'admin/base_site.html' %}
+{% load util %}
+{% load staticfiles %}
+
+{% block extrahead %}
+  <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/dynamic_formset.js' %}"></script>
+{% endblock %}
+
+
+{% block header %}
+    <h1 align="center">Invalid header block</h1>
+    <h2 align="center">for Registration Form</h2>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+Massive security error.
+
+{% block formdescription %}
+This is a generic registration form.  Go nuts.
+{% endblock formdescription %}
+
+{% else %}
+
+<hr>
+<h2>MY ADMINISTRATION REGISTRATION/EDIT FORM</h2>
+<h3>
+Fill out form and hit submit.  User and RegRecord will be created or updated as appropriate.
+
+{% if mark_as_here %}
+<p align="center"><b>Note: registration will automatically be marked as here!</b></p>
+{% endif %}
+
+{% endif %}
+
+
+
+{% block form %}
+no form found
+{% endblock form %}
+
+{% endblock content %}
+

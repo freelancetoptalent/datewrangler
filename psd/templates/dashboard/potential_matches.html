@@ -1,0 +1,38 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% block content %}
+{{psdid}} is {{peep.htmlcode|safe}}
+<hr>
+# Matches: {{peep.matches}}. (One way matches {{peep.oneway}})
+# Records: {{matchlist|length}}
+<p>
+
+<table>
+
+<th>
+<td>MUT</td>
+<td>Date</td>
+<td>Who</td>
+<td>Like</td>
+<td>Liked</td>
+<td>GeekCode</td>
+<td>Their # Match</td>
+</th>
+
+{% for r in matchlist %}
+<tr style="color: {% cycle 'blue' 'black' %}">
+<td>{{ forloop.counter }}</td>
+<td>{% if r.yay %}***{%endif%}</td>
+<td>{% if r.date %}DATE {{r.date.round}} {%endif%}
+<td><a href="{% url "view-user"  event_name=peep.event psdid=r.psdid2 %}">{{ r.psdid2 }}</a></td>
+<td>{{ r.like.match }}-{% if r.like.gay_ok %}G{% endif %}{% if r.like.str_ok %}S{% endif %}</td>
+<td>{{ r.liked.match }}-{% if r.liked.gay_ok %}G{% endif %}{% if r.liked.str_ok %}S{% endif %}</td>
+<td>{{ r.person2.minicode }}</td>
+<td>{{ r.person2.matches }}</td>
+</tr>
+{% empty %}
+No matches found!
+{% endfor %}
+</table>
+
+{% endblock %}

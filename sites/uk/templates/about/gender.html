@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}About Gender with Poly Speed Dating{% endblock %}
+
+{% block header%}<h2>About Gender with Poly Speed Dating</h2>{% endblock %}
+
+{% block content %}
+
+
+
+<p> It is very important to us that we promote inclusive events.
+There are myriad methods of gender and sex identification, and there
+are many issues regarding how people date and relate across and among
+these lines.  We have therefore tried to avoid asking for
+self-identification altogether!
+
+<p>
+<h3>How It Works</h3>
+
+There are two columns of checkboxes: what you are looking for, and what you want your matches to be looking for in terms of gender, 
+sex, or presentation.  
+<p>
+
+The first column is straightforward: check off what you want.  
+<p>
+The second column is slightly tricky. Typically (but not always!) people will at least check off their own identification. However, we've phrased the question in a roundabout manner to allow the option of moving away from personal identity and instead allowing people to say what is important to them in terms of what their matches are open to.
+<p>
+
+<b>The rule used by the speed dating algorithm is: for a match to happen, everything in the other person's
+ second column must be included in your first column (and your second column must include their first column too).</b>  
+I.e., you must be open to every category that they request, and vice versa.  This can be summarized in the following
+      rule: </p>
+    <b><p align="center"><em>You can only be matched with people who are looking
+      for all the things that you check off in the second column.</em></p></b>
+   and<b>
+    <p align="center"><em>You will never be matched with people who have checked off a category in the second column that you are not looking for.</em></p>
+</b>
+<p>
+No problem, right?  One final note:
+    <p align="center"><em>Don't say you are open to something unless
+      you actually are!</em></p>
+    It is not fun for people to go on dates with people clearly not interested in them a priori.
+ 
+<p>
+
+
+<h3>Preferences</h3>
+
+The first column has two checkbox rows.  If you check off either one of the checkboxes, it means that you are open to dating someone of that gender, sex, or presentation.  If you check off both checkboxes, it means that you <i>prefer</i> to date someone in that category.  The matching algorithm will score those matches higher and you will be more likely to get them.  This can be used to set up situations with a preferred set of genders and a fallback set of genders.  See the example section below for some situations where this might be helpful.
+
+<p>
+We recognise that gender identity is really complex, but we're limited by the programming: at the moment, we're using three gender checkboxes, female, male and non-binary-gendered/genderqueer. We understand this still leaves some people out, and welcome your suggestions! 
+Transgender people are absolutely welcome at Poly Speed Dating as their identified gender: we're defining trans women as women, and trans men as men (unless of course they'd like to tick another box!)
+<p>
+This means that anyone who (for example) professes an interest in women will be paired with both cisgender and transgender women for their dates. We recognise that some people may have a problem with the idea that they'd be paired with transgender people, and we suggest that PSD may not be for them! London has a large and thriving transgender poly community, and it's important to us as organisers to treat them well.
+Lastly, we note that the SF team began as we have, by using three gender checkboxes, but they have recently decided to distinguish between trans and cis people and use five categories (trans woman, cis woman, trans man, cis man, non-binary-gendered/genderqueer) upon the request of some transgender people who were tired of dating people who clearly didn't want to date them. We're looking forward to seeing how this system plays out here, and are ready to change our format based on feedback.
+
+
+{% endblock %}

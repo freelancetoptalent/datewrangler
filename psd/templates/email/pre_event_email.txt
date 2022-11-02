@@ -1,0 +1,33 @@
+Dear {{ rr.nickname }} ({{rr.psdid}}),
+
+We look forward to seeing you at Poly Speed Dating! Below are some reminders and some final information about the event.
+
+The event is on {{ event.date|date:"l, F d" }} at {{ event.location }}.  Remember that you absolutely need to be there by {{event.deadlinetime|time:"f a"}}; check-in and pre-event socializing starts at {{event.starttime|time:"f a"}}.
+
+We encourage you to come for dinner at 6pm.  You can sit down to eat, register at your leisure, and wait for us to finalize the dating schedules.  You can also buy beer and cocktails and many other things from the bar (with appropriateID).
+{% if rr.flagged_NMSMSS %}NOTE: Your registration has been flagged as a currently restricted demographic (of some people looking for women only). The following assumes we can verify your balance companion.  (We still need to check your comments field.)
+{% endif %}{% if not rr.paid %}Now, according to our records, you haven't paid! If that's true, you have two choices: you can log in to your account and pay (see below), or you can pay the walk-in rate at the door, which is much more expensive.  The online discount will end 24 hours before Poly Speed Dating starts.
+
+If, on the contrary, you actually have paid: oops! Send us an email at {{ event.info_email|default:"info@polyspeeddating.com" }} that includes your Poly Speed Dating ID and the details of the Paypal transaction (or however you paid), and we'll sort things out.
+{% endif %}
+
+Next, here is an automated summary of your registration: {{ rr.geekcode }}
+
+If anything in that summary is wrong or has changed, log in to {{ request.get_host }}/{% url "account-login" %} with the username and password that came in your original registration email, and
+you can edit your information. If you have any trouble, email us at {{ event.info_email|default:"info@polyspeeddating.com" }} and let us know!
+
+Finally, we want to promise you that if you come to the event and have fewer than four dates-- because of demographics, cancellations, cosmic rays, whatever-- then your evening is on us; talk to us as the event ends and we'll get you a refund.
+
+The key details again:
+
+* Venue: {{event.location}}, at {{event.address}}
+* Venue URL: {{event.locationURL}}
+* The evening goes from {{event.starttime|time:"f"}} to {{event.stoptime|time:"f a"}}.
+* Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+See you soon!
+
+Love,
+Your Poly Speed Dating Organizers
+{{ event.info_email|default:"info@polyspeeddating.com" }}
+{{ event.homepage_url }}

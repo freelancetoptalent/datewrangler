@@ -1,0 +1,11 @@
+{% load util %}
+{% if message %}
+{{message|safe}}
+{%endif%}
+
+Cruising is when people marked you down as someone they wanted to send their contact information to. They did not receive your contact info.  It is up to you to contact them, if you so choose.
+
+Your cruises:
+	
+{% for c in cruises %} * {{c.their_nick}}, {{ c.their_email }} (#{{ c.their_psdid }}) cruised you.
+{% endfor %}

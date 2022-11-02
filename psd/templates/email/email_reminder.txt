@@ -1,0 +1,32 @@
+
+Dear {{ rr.nickname }} (#{{rr.psdid}}),
+
+We look forward to seeing you at {{ event.longname }}.
+
+This is what we have for you: {{ rr.geekcode }}
+
+Event Details
+{{event.date|date:"l, F d"}} from {{event.starttime|time:"f"}}-{{event.stoptime|time:"f a"}}
+at {{event.location}} ({{event.locationURL}})
+{{event.address}}
+{{event.accessdetails}}
+Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+{% if rr.flagged %}Right now you have fewer than four potential matches.  This could be due to an error in your registration.  Please contact us.  It is quite likely that there is a misunderstanding about how our matching works and that a small change would result in many matches.  We encourage you to come regardless, but if you want a refund instead, you are welcome to one.  If you come to the event, please talk to the organizers so we can help you get the most possible (useful) dates.
+{% endif %}
+If you come to the event and end up with fewer than four dates, we will happily refund your money.
+
+If you have mobility concerns, and wish to not have to switch tables between rounds, please contact us.  We can accommodate you.
+
+Due to some peoples sensitivities to chemicals, please do not wear heavy scents at this event.
+
+If you have received an email like this one with an ID different from {{rr.psdid}}, please let us know so we can make sure you are not double-registered.
+
+If you want to change your registration, log in to your account at
+     http://www.polyspeeddating.com{% url "account-login" %}
+
+Your username is {{ rr.psdid }}, the same as your ID Code.
+
+- The PSD Tech Folks
+{{event.info_email}}
+{{event.homepage_url}}

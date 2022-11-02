@@ -1,0 +1,29 @@
+
+Dear {{ rr.nickname }} (#{{rr.psdid}}),
+
+We can find no record of either your payment or arrangements for payment.
+
+Please let us know of your plans, or of our error.  Thank you!
+
+- The PSD Tech Folks
+info@polyspeeddating.com
+{{ request.get_host }}
+
+
+
+Additional Notes:
+You are registered as {{ rr.geekcode }}
+
+Event Details
+{{event.date|date:"l, F d"}} from {{event.starttime|time:"f"}}-{{event.stoptime|time:"f a"}}
+at the {{event.location}} ({{event.locationURL}})
+{{event.address}}
+{{event.accessdetails}}
+Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+If you have received an email like this one with an ID different from {{rr.psdid}}, please let us know so we can make sure you are not double-registered.
+
+If you want to check your registration or change your registration, log in to your account at
+     http:{{ request.get_host }}/{% url "account-login" %}
+
+Your username is {{ rr.psdid }}, the same as your ID Code.

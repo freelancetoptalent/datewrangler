@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Sorta Failed Login{% endblock %}
+
+{% block content %}
+
+You logged in successfully, but there was no viewable account for your
+username.
+
+<p>
+ Either something has gone very wrong (email {{ event.info_email|default:"bostonpsd@polyspeeddating.com" }}!)
+or you're logged in with the staff account, and need to go logout in
+the admin interface.
+
+{% endblock %}
+

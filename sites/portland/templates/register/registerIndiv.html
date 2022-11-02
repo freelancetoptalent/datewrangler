@@ -1,0 +1,358 @@
+{% extends baseregform %}
+{% load util %}
+
+{% block header %}
+{% if is_reregister %}
+<h2 align="center">Registration Update Form for {{ user }} at {{ event.longname }} on {{ event.date }}</h2>
+{% else %}
+<h2 align="center">Registration Form (Individual) for {{ event.longname }} at {{ event.location }} on {{ event.date }}</h2>
+{% endif %}
+{% endblock header %}
+
+
+{% block formdescription %}
+
+<h3>Are you a group?</h3>
+<p align="left">This is the registration form for individuals.  Filling it out means you
+  want to go on dates by yourself. If you want to go on dates as a member of a
+  set group (say you are an existing triad that is looking for a fourth of some sort
+  or another) then fill in the <b><a href="../group/{{ event.event }}">other form</a>.</b></p>
+{% endblock formdescription %}
+
+{% block regnote %}
+
+{% if event.no_ssm and not is_reregister %}
+<h2>NOTE: Registration for Some Demographic Categories is Now Full.  Some restrictions are in place for some people looking for women.</h2>
+<h2 align="center">Please read</h2>
+<ul>
+
+<p>Due to an imbalance in registration demographics, we are having
+to limit registration for some categories of people. <b>Please read this
+carefully.</b></p>
+
+If you:
+<ul>
+<li>are not looking for speed dates with men; and</li>
+<li>DO require your dates to be interested in men</li>
+</ul>
+then in order to register, you must also refer another new speed dater
+who does NOT meet the above description. This means that, for example, straight men
+would need to bring a balancing companion, as would people of any gender who
+require their dates to be bisexual or pansexual. The person you refer can date
+separately and is not assumed to be your partner. We will automatically break your date chance with that person.
+
+See <a href="{% url "registration-note" event_name=event.event %}"
+target="_blank">this note</a> for more information and a longer
+apology.  If you want to come, then follow these steps:
+
+<ol>
+<li>
+Find a friend.  Our apologies, but friends who have
+already registered do not count.
+</li>
+<li>
+Have your friend register, and list you as a reference. They should
+then give you their Registration ID.
+</li>
+<li>
+Register yourself.  Cite your friend in the "remarks" field so we
+don't have you date someone you already know.  Include your friend's
+registration ID.
+</li>
+<!-- <li>Potentially collect free beverage or gift at the event for having someone cite you as a reference!</li> -->
+</ol>
+<p>Again, sorry for the restriction.</p>
+</ul>
+<hr>
+{% endif %}
+
+{% endblock regnote %}
+
+
+
+
+{% block form %}
+
+
+<form name="individReg" method="post" action="">
+  {% csrf_token %}
+  <p> </p>
+<h2>Name and Contact Info</h2>
+<blockquote>
+<p>  Nametag name:  {{ rform.nickname }}
+	<br> E.g. "Janet", "Lightning", "Moe" </p>
+
+<p>Non-public Name (First, then Last):  {{ pform.first_name }} {{ pform.last_name }}  <br> Feel free to use initials or an alias; this is just so we can distinguish between multiple people with the same first name/nickname.
+
+<br>
+<p>
+  Email:
+    {{ rform.email }}
+<br>
+  This email address will be given out when you successfully match
+    with someone.  It will not be made public or shared for any other reason.</p>
+
+</blockquote>
+
+<br>
+
+<h2>Age Matching</h2>
+
+  <blockquote>
+My age is {{ pform.age }}
+
+
+    <p>I am open to people with ages from
+      {{ pform.seek_age_min }}
+      to
+      {{ pform.seek_age_max }}
+    </p>
+</blockquote>
+
+<br>
+
+
+<h2>Gender Matching (<a href="{% url "about-page"  what="gender" %}" target="_blank">Help!</a>)</h2>
+<ul>
+
+	<p align="center">Gender matching is complex.  We have
+	attempted to design a system that is all-inclusive and
+	celebratory of the full spectrum of what is possible.  Please
+	read the <a href="{% url "about-page"  what="gender" %}"
+	target="_blank">help section</a> for more about what's going
+	on here.
+	<p align="center">
+
+</ul>
+
+
+<table class="stat" align="center" cellspacing=0 cellpadding=0 width="90%">
+
+
+<tr>
+<td width="40%" valign="top">
+<!--How broadminded am I?-->
+For this event, <b>I want to date <i color="red">any combination</i> of the following:</b><br>
+
+</td>
+<td width="5%">
+</td>
+<td width="40%" valign="top">
+<!--<b>How broadminded do I want my dates to be?-->
+<b>My dates must be open to dating <i color="red">all</i> of the following:</b>
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+{{pform.seek_gender}}
+</td>
+
+<td width="5%">
+</td>
+
+<td valign="top">
+{{pform.gender}}
+</td>
+</tr>
+
+	<tr>
+	<td valign="top">
+If you check both boxes in a row, that indicates a preference over rows where you only checked one box.</p>
+	<i>  We do not explicitly ask for anyone's sex or gender and thus
+	cannot guarantee any of your dates' sex or
+	gender.
+</i>
+
+	</td>
+	<td width="5%">
+	</td>
+	<td valign="top">
+
+<i>Check as many as you wish.  Use this column to limit dates to people who might be interested in you.
+</i>
+
+</td>
+
+
+
+</table>
+
+<br>
+<br>
+
+<h2>Identity Matching</h2>
+<blockquote>
+<h3>I am <small>(check all that apply)</small>:</h3>
+  <blockquote>
+
+
+<p>{{ pform.X_primary }} not currently in a primary relationship, but potentially interested in one.</p>
+
+<p>{{ pform.X_kinky }} kinky. <a href="{% url "about-page"  what="kink" %}" target="_blank">(About the kinkiness.)</a></p>
+
+  </blockquote>
+
+<h3>I am open to:</h3>
+<blockquote>
+
+<p>Primary-searchiness:&nbsp;&nbsp;
+    {{ pform.X_seek_primary }}
+
+<p>Kinkiness:&nbsp;&nbsp;
+    {{ pform.X_seek_kinky }}
+</blockquote>
+
+
+<h3>Regarding kink, which describes you best? </h3>
+
+<p>"Top" would indicate a dominant/doing role, "Bottom" a submissive/recieving role, checking both implies being a "Switch", and "Neither" is for those for whom this does not apply.
+
+<table class="stat" align="center" cellspacing=0 cellpadding=0 width="90%">
+<tr>
+<td width="40%" valign="top">
+I identify as...
+</td>
+<td width="5%">
+</td>
+<td width="40%" valign="top">
+I want people who answered...
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+{{pform.X_kinkrole}}
+</td>
+
+<td width="5%">
+</td>
+
+<td valign="top">
+{{pform.X_seek_kinkrole}}
+</td>
+</tr>
+</table>
+
+</blockquote>
+
+<br>
+
+
+  <h2>Groups:</h2>
+  <blockquote>
+  <p align="center">Some folks will be speed-dating as a group. This means
+    you might go on a date with <em>all of them at once!</em> <br>  You can elect to only date groups where you theoretically would be interested in everyone in the group, or at least one person in the group.
+
+  <p>That being said:</p>
+  <blockquote>
+
+      {{ rform.seek_groups }} I am willing to date groups.<p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ rform.groups_match_all }} But only if I match <em>everyone</em> in the group.<p>
+
+Note: Remember that this is Poly Speed Dating--just because you say no to dating a group does not mean the individuals you do end up dating do not have pre-existing relationships.
+
+  </blockquote>
+  </blockquote>
+
+<br>
+
+<h2>Areas of Residence and/or Employment:</h2>
+  <blockquote>
+    <p align="center">As a secondary consideration, we attempt to match you with people from similar geographical areas.</p>
+I am from (check all that apply):<br>
+
+      {{ rform.location }}
+
+</p>
+  </blockquote>
+
+<br>
+
+
+<h2>Friendship Dates:</h2>
+  <blockquote>
+<p align="center">Due to the matching process, and depending on who registers, you may have slots in your schedule with no date.  During these times you can either socialize in the social area or, if you like, have us attempt to schedule "friendship dates" with people who mutually <em>do not</em> match you.  Would you like to have a few of these dates?
+  <blockquote>
+
+      {{ rform.friend_dates }}        <label>   I want some friendship dates.
+  </blockquote>
+</blockquote>
+
+<hr>
+<h2 align="center">General Information</h2>
+
+<!--  <h2>Who do you know?</h2>-->
+<h2>Referral:</h2>
+<blockquote>
+  <p>I learned about PSD or I was referred to PSD by:
+    {{ rform.referred_by }}
+  </p>
+  <p align="center">(Leave blank if you are a returning dater, or if you don't recall.)</p>
+</blockquote>
+
+{% if event.has_childcare %}
+<h2>Childcare:</h2>
+<blockquote>
+<p align="center">We are planning on providing childcare if at all possible.  Please let us know if you need those services.
+<p>
+{{ rform.wants_childcare }} Yes, I would love childcare for (please list names and ages of children):
+<p>
+<blockquote>
+  <blockquote>
+    <blockquote>
+{{ rform.children }}
+</blockquote></blockquote></blockquote>
+</blockquote>
+{% endif %}
+
+<h2>Mobility:</h2>
+<blockquote>
+  <p align="center"> If you would like to not have to move from table to table between dates due to mobility concerns,
+  please check the box below.  Note that this is not a matching criterion.
+<blockquote>
+
+            <p>
+<p>{{ rform.stationary }} I would like to be stationary.
+            </p>
+          </blockquote>
+
+</blockquote>
+
+
+<h2>Future Contact</h2>
+<blockquote>
+    {{ rform.add_to_mailings }}
+    Yes, I want to hear about future Poly Speed Dating (or other related Poly
+    Social) events thrown by you folks.</p>
+</blockquote>
+
+<h2>Comments/Remarks:</h2>
+  <p align="center"> Anything to add?  Anything we should know? Anything we can do to help with accessibility?</p>
+  <blockquote>
+        <blockquote>
+          <blockquote>
+            <p>
+              {{ rform.comments }}
+            </p>
+          </blockquote>
+    </blockquote>
+  </blockquote>
+
+
+
+  <p align="center">
+{% if admin_mode %}
+    <input type="submit" name="Submit_Indiv" value="Update/Register Reg Record">
+{% else %}
+    <input type="submit" name="Submit_Indiv" value="Register Me!">
+{% endif %}
+    <br>
+  </p>
+
+
+
+</form>
+
+{% endblock form %}
+

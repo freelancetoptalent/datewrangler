@@ -1,0 +1,93 @@
+{% load util %}
+{% load i18n %}
+
+Hey there, PSD staff person. To check someone in:<br /><br />
+ * Make sure they've paid, and if not, ask them to!<br /><br />
+ * Click the button next to their name.<br /><br />
+
+<p>
+Flag Key:<br>
+* LOW - not many potential matches.  Have them see special agent. <br>
+* DRINK - give them a free drink ticket <br>
+* READ - something possibly important (with an !) is in the comments to right. Read it and check<br>
+* SSM - they registered and we don't have a balance date for them.  See agent.<br>
+* CHECK - something is off.  Have them see agent.<br>
+
+<br>
+
+{% for chk in checked_in %}
+<form name="checkmein" method="post" action="">
+{% csrf_token %}
+<h3 align="center" style="color:red">
+You have checked in <a href="{% url "edit-user"  event_name=event_name psdid=chk.psdid %}">
+{{ chk.psdid }}: {{ chk.nickname }} ({{chk.full_names}})</a>
+<input type="hidden" name="undo" value="{{chk.id}}">
+<input type="submit" value="UNDO {{chk.psdid}}">
+</form>
+
+</h3>
+{% endfor %}
+
+
+{% for w in warnings %}
+<h3 align="center" style="color: red">
+{{w.message}} <a href="{% url "view-user"  event_name=event_name psdid=w.psdid %}">
+{{ w.psdid }} - {{ w.nickname }}
+</a>
+{% endfor %}
+</h3>
+
+<p align="center">Jump to <a href="{% url "event-manager"  event_name=event_name %}">event manager</a>.</p>
+
+
+<hr>
+
+
+
+<table>
+<th>
+<td>ID</td>
+<td>Nickname</td>
+<td>Name</td>
+<td></td>
+<td></td>
+<td>CHECK IN</td>
+<td>Flag</td>
+<td>Notes</td>
+</th>
+{% for reg in regs %}
+{% if reg.here %}
+
+<tr style="color: {% cycle 'blue' 'black' %}">
+<td>{{forloop.counter}}</td>
+<td><a href="{% url "edit-user"  event_name=event_name psdid=reg.psdid %}">{{ reg.psdid }}</a></td>
+<td>{{ reg.nickname }}</td>
+<td>{{ reg.full_names }}</td>
+<td>{% if reg.paid %}Paid{% else %}Not Paid{% endif%}</td>
+<td width=60></td>
+<td>HERE</td>
+<td>{{reg.registration_flag}}</td>
+<td><small>{{ reg.notes|paypalrefund }}</small></td>
+</tr>
+
+{% else %}
+<form name="checkmein" method="post" action="">
+{% csrf_token %}
+<input type="hidden" name="here" value="{{reg.id}}">
+<tr style="color: {% cycle 'blue' 'black' %}">
+<td>{{forloop.counter}}</td>
+<td><a href="{% url "edit-user"  event_name=event_name psdid=reg.psdid %}">{{ reg.psdid }}</td>
+<td>{{ reg.nickname }}</td>
+<td>{{ reg.full_names }}</td>
+<td><input name="paid" type="checkbox" value="{{ reg.id }}" {% if reg.paid %}CHECKED{% endif%}/>PAID</td>
+<td width=60></td>
+<td><input type="submit" value="check in {{reg.psdid}}"></td>
+<td>{{reg.registration_flag}}</td>
+<td><small>{{ reg.notes }}</small></td>
+</tr>
+</form>
+{% endif %}
+
+{% endfor %}
+</table>
+

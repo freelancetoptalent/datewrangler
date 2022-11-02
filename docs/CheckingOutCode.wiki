@@ -1,0 +1,8 @@
+= Note on checking out the code base =
+
+There are two main forks.  Django has the django code.   java has the java code and the R code.
+
+Website is the website, and has no code directly relevant to registration.
+
+lib has a jar file so java can talk to sqlite.  You need to get that working with java for the java code to work (add it to your classpath).
+

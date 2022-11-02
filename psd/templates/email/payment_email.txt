@@ -1,0 +1,30 @@
+Registration or Payment received for {{ rr.nickname }} (# {{ rr.psdid }})
+
+Event Record: {{ rr }}
+
+{{rr.nickname}}: {{ rr.geekcode }}
+
+They had the following comments: {{rr.comments}}
+
+You have the following notes: {{rr.notes}}
+
+Payment Flag: {{ rr.paid }}
+Pending Pay Flag: {{rr.pending }}
+Cancelled Flag: {{rr.cancelled}}
+
+Wants Childcare: {{rr.wants_childcare}}
+
+Stationary: {{rr.stationary}}
+
+Pals Listed: {{rr.pals}}
+
+Number of matches: {{rr.matches}}  (One-way {{rr.oneway}})
+
+Data object from paypal (if any): {{ data }}
+
+This is an automatically generated email to keep you apprised of the registration situation.
+
+- PSD Tech Daemon
+{{ event.info_email|default:"info@polyspeeddating.com" }}
+{{ request.get_host }}
+

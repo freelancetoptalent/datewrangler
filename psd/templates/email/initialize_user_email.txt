@@ -1,0 +1,28 @@
+Dear {{user.first_name}} (# {{user.username}}),
+
+You are being sent this email as an invitation to register for the Poly Speed Dating Event {{event.longname}}.  You still need to log on to our site and register.  You can do this by clicking the link below and logging in.
+
+{% if newuser %}Your PSD ID has been pre-made and is {{ user.username }}.  Your password is {{ password }}.  Don't lose them! {% else %}Your ID Code from prior events is {{user.username}}.{% endif %}
+
+To register, log in to your account at 
+     http://{{ request.get_host }}{% url "account-login" %}
+
+From there, click on the event link and fill in the registration form.
+
+If you are planning on registering as a group with someone, and your PSD ID does not end in a "G" then please contact the organizers at {{event.info_email}} for further instructions.
+
+The speed-dating event is on {{ event.date|date:"l, F d" }} at {{event.location }}.  You absolutely need to be there by {{event.deadlinetime|time:"f a"}} if you want to play.  Registration and pre-event socializing starts at {{event.starttime|time:"f a"}}.
+
+Event Details
+{{event.date|date:"l, F d"}} from {{event.starttime|time:"f"}}-{{event.stoptime|time:"f a"}}
+at {{event.location}} ({{event.locationURL}})
+{{event.address}} 
+{{event.accessdetails}}
+Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+If you have received an email like this one with an ID different from {{user.username}}, please let us know so we can make sure you are not double-registered.  
+
+
+- The PSD Tech Folks
+{{event.info_email}}
+{{event.homepage_url}}

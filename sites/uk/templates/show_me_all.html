@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Display for {{user.username}}{% endblock %}
+
+{% block content %}
+
+{% if staff_call %}
+<h2>Profile Page For {{psdid}}</h2>
+
+<p>This page shows what this user sees when they log in</p>
+{%else%}
+<h2>Welcome, {{user.username}}</h2>
+<p>This page shows you all events you can register for, have registered for, and have gone to in the past.
+From here you can register by clicking on the event you wish, or update your registration by clicking on the appropriate re-register link.
+
+{%endif%}
+
+{% if open_events %}
+<h2 align="center">Open Events</h2>
+<p>
+Click on any event to register.
+<p>
+<ul>
+    {% for evt in open_events %}
+    <p>
+ <li>  <a href="../../{{group_or_individual}}/{{evt.event}}"> 	{{evt.longname}}, {{evt.date|date:"l, F d"}} </a>
+
+ </ul>
+    {% endfor %}
+
+<hr>
+
+{% endif %}
+
+{% if reg_list_cur %}
+	<h2 align="center">Current Registrations</h2>
+    <ul>
+    {% for reg in reg_list_cur %}
+
+        <li><h3>{{reg.eventrec.longname}}, {{reg.eventrec.date|date:"l, F d, Y"}}</h3>
+        {% if reg.cancelled %}<b>NOT</b> {% endif %} Registered as {{ reg.nickname }} ({{reg.psdid}}).  This is your registration: <br><ul>
+         {{reg.htmlcode|safe}}  </ul>
+        <p align="right">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
+        Not right?
+        {% if reg.is_group %}
+          <a href="{% url "group-registration"  event_name=reg.event %}">Re-register</a>
+		{%else%}
+		 <a href="{% url "individual-registration"  event_name=reg.event %}">Re-register</a>
+		{%endif%}
+
+<h3>Event Details</h3>
+<ul>
+{{reg.eventrec.date|date:"l, F d, Y"}} from {{reg.eventrec.starttime|time:"f"}}-{{reg.eventrec.stoptime|time:"fa"}}
+<br>at the <a href="{{reg.eventrec.locationURL}}">{{reg.eventrec.location}}</a>
+<br>{{reg.eventrec.address}} {{reg.eventrec.accessdetails}}
+<p>Check-in starts at {{ reg.eventrec.starttime|time:"fa" }}
+ You <em>must</em> be there by {{ reg.eventrec.deadlinetime|time:"fa" }}</p>
+</ul>
+
+
+<h3>Payment Status</h3>
+<ul>
+{% if reg.paid %} You have paid.
+<p>
+If this is in error, please contact us.
+{% else %}
+
+{% if reg.pending %}
+<p>
+ You have not yet paid, but you have made arrangements to pay.
+ {% else %}
+<p>
+<b>We have not yet recorded any payment or arrangement for you to pay.</b>
+<p>  Please note that it takes us awhile to mark down special payment arrangements since this information is not automatically loaded into the database.   However, if it has been longer than a week since you paid or made arrangements to pay, but there is no note of that above, then please email us.
+<p>
+To pay, please follow the link below to PayPal. Your payment will be going to
+<i>{{ reg.eventrec.paypal_email|default:"info@polyspeeddating.com" }}</i>.
+Pre-registration price is &pound;{{ reg.eventrec.cost }} per person.   Door price is &pound;{{ reg.eventrec.doorcost}} per person.
+If you do not wish to use PayPal, then please contact us directly and we will arrange
+alternate means for you to pay.
+</p>
+
+{% for i in 4|looprange %}
+
+{% ifequal i 1 %}One{% endifequal %}
+{% ifequal i 2 %}Two{% endifequal %}
+{% ifequal i 3 %}Three{% endifequal %}
+{% ifequal i 4 %}Four{% endifequal %}
+
+{% ifequal i 1 %}Person{% else %}People{% endifequal %}:
+{% ifequal i reg.people.count %}&nbsp;&nbsp;&nbsp;&nbsp;<i>This is the number of people you registered for. Use this button
+unless you're paying for other people.</i>{% endifequal %}
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="{{ reg.eventrec.paypal_email|default:"info@polyspeeddating.com" }}">
+<input type="hidden" name="item_name" value="{{ i }} {% ifequal i 1 %}Person{% else %}People{% endifequal %} ({{ reg.psdid }})">
+<input type="hidden" name="amount" value="{% widthratio i 1 reg.eventrec.cost %}.00">
+<input type="hidden" name="shipping" value="0.00">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="return" value="http://{{ request.get_host }}{% url "account-view"  %}">
+<input type="hidden" name="cancel_return" value="http://{{ request.get_host }}{% url "account-view"  %}">
+<input type="hidden" name="cn" value="Additional information">
+<input type="hidden" name="currency_code" value="GBP">
+<input type="hidden" name="tax" value="0.00">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="bn" value="PP-BuyNowBF">
+<input type="hidden" name="custom" value= "{{reg.eventrec.event}}-{{reg.psdid}}">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+{% endfor %}
+
+
+
+{% endif %}
+
+<p>  If you feel you have paid in full and we do not have that noted above, then please email us.
+
+
+
+{% endif %}
+
+
+{% if reg.cancelled %}
+<h3 align="center">Please note that we think you have told us that you are <b>cancelling</b> your registration.</h3>
+{% endif %}
+
+</ul>
+
+{% if reg.stationary %}
+<h3>Mobility Note</h3>
+<ul>
+<p>We have a note that you would prefer to move from seat to seat as little as possible due to some mobility constraints.
+</ul>
+{% endif %}
+
+{% if reg.comments %}
+<h3>Your extra comments</h3>
+<ul>
+<p>{{reg.comments}}</p>
+{% endif %}
+
+{% if reg.hasNotes and staff_call %}
+<h3>Misc. Admin Notes</h3>
+<ul>
+<p>{{ reg.notes|safe }}</p>
+{% endif %}
+
+<h3 align="center">If there is an error, contact us!  Click <a href="mailto:{{ reg.info_email|default:"error@polyspeeddating.com" }}">here</a> to email.</h3>
+
+
+
+        </p><p>&nbsp</p></li>
+
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<hr>
+
+<h2 align="center">Past Registrations</h2>
+
+{% if reg_list_past %}
+    <ul>
+    {% for reg in reg_list_past %}
+
+        <li><b>{{reg.eventrec.longname}}, {{reg.eventrec.date|date:"l, F d, Y"}}</b><br>
+
+              </p><p>&nbsp</p></li>
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No past registrations.</p>
+{% endif %}
+
+
+{% endblock %}

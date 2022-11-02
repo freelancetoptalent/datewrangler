@@ -1,0 +1,45 @@
+{% extends 'dashboard/event_manager.html' %}
+{% load util %}
+
+{% block title %}
+Update Notes for Multiple IDs
+{% endblock %}
+
+{% block content %}
+
+{% if results %}
+Results of update:
+{% for r in results %}
+<br>{{r}}
+<hr>
+{% endfor %}
+<p>
+
+<p>
+{% if err_message %}
+<b>
+Errors: {{ err_message|safe }}
+</b>
+{% endif %}
+<hr>
+
+{% endif %}
+
+
+
+<hr>
+Enter what you want to append and a comma or space-seperated list of PSD IDs.
+<br>
+Warning: Will not add string if string already in notes as a substring!
+
+<p>
+<form action="" method="POST">
+{% csrf_token %}
+            {{ form }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="submit" value="Go!"></p>
+    </form>
+
+
+
+
+{% endblock %}

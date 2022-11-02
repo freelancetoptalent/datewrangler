@@ -1,0 +1,48 @@
+{% extends 'dashboard/event_manager.html' %}
+{% load util %}
+
+{% block title %}
+Paste Paypal Info to check off multiple IDs
+{% endblock %}
+
+{% block content %}
+
+{% if results %}
+Results of update:
+{% for r in results %}
+<br>
+<pre>
+{{r}}
+</pre>
+<hr>
+{% endfor %}
+<p>
+
+
+<p>
+{% if err_message %}
+<b>
+Errors: {{ err_message|safe }}
+</b>
+{% endif %}
+<hr>
+
+{% endif %}
+
+
+
+<hr>
+Enter text, one PSD per line, to check off those as paid.  It will find PSDIDs in "(PSDID)" (with parenthesis)
+<br>
+
+<p>
+<form action="" method="POST">
+{% csrf_token %}
+            {{ form }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="submit" value="Go!"></p>
+    </form>
+
+
+
+
+{% endblock %}

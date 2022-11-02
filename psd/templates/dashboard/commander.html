@@ -1,0 +1,49 @@
+{% extends 'admin/base_site.html' %}
+
+{% load i18n util admin_modify admin_static %}
+
+{% block title %}PSD Commander{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+
+<a href="{% url "admin:index" %}">{% trans "Home" %}</a>
+ &rsaquo;
+</div>
+{% endif %}{% endblock %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="/admin/commander/">Commander</a></li>
+    <li><a href="history/" class="historylink">"History"</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+
+{% block header %}
+PSD Commander
+{% endblock %}
+
+{% block content %}
+
+{{ results|safe }}
+
+
+<hr>
+
+{% for act in actions %}
+{% if act %}
+<p> <a href="{% url "commander-action" action=act.action %}">{{act.action_description}}</a>
+{% if act.argument_description %}
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{act.argument_description}}
+{% endif %}
+{% else %}
+<hr>
+{% endif %}
+{% endfor %}
+
+<hr>
+
+{% endblock %}

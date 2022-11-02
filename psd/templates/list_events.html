@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}All Open Events{% endblock %}
+
+{% block content %}
+
+<h2>Open Speed Dating Events!</h2>
+
+{% if open_events %}
+
+<ul>
+
+{% for evt in open_events %}
+ <li>  <a href="{% url "individual-registration" event_name=evt.event %}">Individual</a>/<a href="{% url "group-registration"  event_name=evt.event %}">Group</a> reg for
+ {{evt.longname}}, {{evt.date|date:"l, F d"}}
+</li>
+
+ </ul>
+{% endfor %}
+
+<hr>
+{% else %}
+<ul>
+There are no events currently open.
+</ul>
+{% endif %}
+
+
+
+<hr>
+
+
+{% if old_events %}
+<h2>Past Events</h2>
+    <ul>
+    {% for evt in old_events %}
+
+        <li><b>{{evt.longname}}, {{evt.date|date:"l, F d, Y"}}</b><br>
+
+              </p><p>&nbsp</p></li>
+
+    {% endfor %}
+    </ul>
+{% endif %}
+
+
+{% endblock %}

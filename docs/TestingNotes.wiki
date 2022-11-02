@@ -1,0 +1,8 @@
+#summary Notes on how to test and where testing files are.
+
+= Sample Cases for Testing =
+
+There should be a testdb sqlite database that is checked in with a bunch of fake users.  This is good for testing.  It does need to be rebuilt periodically, I expect.
+
+
+The admin account in that database (for using django's admin) is 'psd' with password 'psd'

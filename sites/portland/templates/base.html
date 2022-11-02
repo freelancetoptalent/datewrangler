@@ -1,0 +1,106 @@
+{% load util %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{% block title %}Poly Speed Dating{% endblock %}</title>
+
+    {% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}">
+    {% endblock %}
+    {% block js %}
+      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    {% endblock js %}
+
+  </head>
+
+  <body class="oneColElsCtrHdr">
+
+    <div id="container">
+      {% block container_top %}
+
+      {% endblock container_top %}
+
+      <div id="header">
+
+        <div align="left">
+
+        </div>
+
+        <div id="mainContent">
+          <p>&nbsp;</p>
+
+<h1 align="center">Portland Poly Speed Dating</h1>
+<hr>
+
+          <h1 align="center">
+            {% block header %}
+Header Block
+            {% endblock %}
+	  </h1>
+
+        </td>
+        <td>
+
+
+
+          {% with "info@polyspeeddating.com" as default_email  %}
+            {% block content %}
+            <h1 align="center">Unknown Page</h1>
+
+            You've navigated your way to a page that shouldn't be displayed yet. Secret!
+            Email us at {{ event.info_email|default:default_email }} with the URL where you saw this and we'll
+            buy you a drink at the next event.
+            {% endblock content %}
+          {% endwith %}
+
+
+
+          {% block footer %}
+
+          <p align="center">
+
+            {% if not user.is_anonymous %}
+
+            You are logged in as {{ user.username }} ~
+
+            <a href="{% url "account-logout" %}">logout</a> ~
+            <a href="{% url "account-view" %}">view registration</a> ~
+            <a href="{% url "password-change" %}">change password</a>
+
+            {% endif %}
+          </p>
+
+          {% endblock footer %}
+
+
+
+        </td>
+      </div>
+      <div id="footer">
+
+
+        <p align="center" class="style4">
+          •
+          {% block extra_footer_links %}
+          <a href="mailto:{{ event.info_email }}">Contact</a> |
+          <a href="{% url "account-login" %}">Log In</a> |
+          <a href="{{ event.mailing_list_url }}"> Join our Mailing List</a>
+          {% endblock extra_footer_links %}
+          •
+          <br>
+            This registration site powered by SF PSD's <b>DateWrangler</b>
+          </p>
+
+    </div>
+</div>
+
+  <script type="text/javascript">
+  {% block extra_js %}
+  {% endblock extra_js %}
+  </script>
+
+    </body>
+  </html>

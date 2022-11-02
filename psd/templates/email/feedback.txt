@@ -1,0 +1,7 @@
+Hey, PSD admins! Someone sent us feedback!
+
+Email: {{ cd.email }}
+PSDID: {{ cd.psdid }}
+Topic: {{ cd.topic }}
+
+Message: {{ cd.message|safe }}

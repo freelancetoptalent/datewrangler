@@ -1,0 +1,25 @@
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+
+EMAIL_SUBJECT_PREFIX = '[PSD] '
+
+EMAIL_HOST_USER = 'something'
+EMAIL_HOST_PASSWORD = 'something'
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'u^sadfsdfgsdfguspn4#mmlx+*a&afsdfasdadsfsdfaasdfaw'
+
+
+# override templates
+INSTALLED_APPS[INSTALLED_APPS.index('sites.base')] = 'sites.dc'
+
+print(INSTALLED_APPS)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}

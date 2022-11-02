@@ -1,0 +1,58 @@
+Dear {{ rr.nickname }} ({{rr.psdid}}),
+
+We look forward to seeing you at {{ event.longname }}! Here are some reminders and
+final information about the event.
+
+The event is on {{ event.date|date:"l, F d" }} at {{ event.location }}.
+Remember that you absolutely need to be there by {{event.deadlinetime|time:"f a"}};
+check-in and pre-event socializing starts at {{event.starttime|time:"f a"}}.
+{% if rr.flagged %}
+Right now, you have fewer than four potential matches. Often
+this is caused by an error in registration, or there's a small change that could
+result in more matches. Please contact us so we can have a look at things! We
+encourage you to come regardless, but if you want a refund instead, you're
+welcome to one.
+
+If you do attend, and you end up having fewer than four dates for whatever
+reason, your evening's on us-- come see us at the end of the night for a full refund.
+{% endif %}
+We'll have free food and soft drinks for you as part of the event. You can also
+buy beer and cocktails and many other things from the bar (with appropriate
+ID).
+{% if not rr.paid %}
+Now, according to our records, you haven't paid! If that's
+true, you have two choices: <a
+href="http://boston.polyspeeddating.com/Register.html">
+Pay now through Paypal (go directly to Step 2)</a> or pay the walk-in rate (${{
+event.doorcost }} per person) in cash at the event. The online discount will
+end 24 hours before Poly Speed Dating starts.
+
+If, on the contrary, you actually have paid: oops! Send us an email at
+{{ event.info_email|default:"info@polyspeeddating.com" }} that includes your Poly Speed Dating ID and
+the details of the Paypal transaction (or however you paid), and we'll sort
+things out.
+{% endif %}
+Next, here is an automated summary of your registration: {{ rr.geekcode }}
+
+If anything in that summary is wrong or has changed,
+log in to http://boston.polyspeeddating.com{% url "account-login" %}
+with the username and password that came in your original registration email, and
+you can edit your information. If you have any trouble, email us at
+{{ event.info_email|default:"bostonpsd@polyspeeddating.com" }} and let us know!
+
+{% if not rr.flagged %}Finally, we want to promise you that if you come to the event and have fewer than
+four dates-- because of demographics, cancellations, cosmic rays, whatever-- then your
+evening is on us; talk to us as the event ends and we'll get you a refund.{% endif %}
+
+The key details again:
+
+* Venue: {{event.location}}, at {{event.address}}
+* Venue URL: {{event.locationURL}}
+* The evening goes from {{event.starttime|time:"f"}} to {{event.stoptime|time:"f a"}}.
+* Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+See you soon!
+
+- Aaron, Rosa and Luke
+{{ event.info_email|default:"info@polyspeeddating.com" }}
+http://boston.polyspeeddating.com

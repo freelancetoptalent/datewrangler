@@ -1,0 +1,67 @@
+#summary For developers.  How do to things with django.
+
+== Setting things up ==
+Install python and django.  Check out this code base.  Configure settings.py and whatnot as described in SetupDjango.
+
+== Making a test database ==
+
+Run
+{{{
+python psdmanage.py testdb 
+}}}
+in the django/psd/ directory.
+
+== Running test server on your computer ==
+
+Run 
+{{{
+python manage.py runserver
+}}}
+ in the psd directory of the django directory.  It should tell you that things are working, and that you should browse a local url in your web browser.  You should.
+
+Try it out by going to the local address in your web browser:
+{{{
+http://127.0.0.1:8000/individual/testing1   -- should be a user reg page (if you have testing1 event defined)
+http://127.0.0.1:8000/admin -- for the admin pages
+http://127.0.0.1:8000/admin/checkin/ -- for the check-in page
+}}}
+
+
+== Resetting/building empty sqlite database ==
+
+When there's a change to the schema, this needs to happen on the server:
+{{{
+ # cd <where the database is kept>
+ # rm testdb
+ # cd .../django/psd/
+ # python manage.py syncdb
+      >> you will be asked to make an admin account.  Do so, and remember the password.
+ # chmod 666 ..../testdb
+}}}
+This, obviously, doesn't migrate any of the old data; if we need to do that, there are ways, just not as simple.
+
+
+--------
+
+== How can I take things down for database maintenance? ==
+change urls.py so that the only line in urlpatterns was
+
+{{{
+     ('^.*','django.views.generic.simple.direct_to_template', {'template': 'templates/maintenance_sorry.html'}),
+}}}
+
+and then all urls would redirect to a rendering of that html.
+
+
+==How can I change the width of the auto-form text fields?  Possible?  Easy?==
+
+
+Possible, yes. Easy, yes. Simple, no.
+
+Look in register/forms.py. If a form has a variable defined that happens to have the same name as a field in that form, then that variable controls the appearance of that field. I've added a line for "age" to make it only 5 spaces wide.
+
+(But wait, you say! There are only like three fields mentioned there, but the form has lots of fields. True. The "class Meta:" block tells Django that this form is based off of the Person model in the database, and for any field not explicitly described, Django should use the default widget for the type of data that goes in that field.)
+
+To change the width of other fields, just copy the 'age' line and change the value of 'size'. Plus you'll have to replace "forms.IntegerField" with "forms.CharField" if it's a string input rather than a number.
+
+This is muddy Django magic (and not very Pythonic), unfortunately.

@@ -1,0 +1,65 @@
+body {
+font: 100% Verdana, Arial, Helvetica, sans-serif;
+/* background: #000000; */
+background: #F8F8F8;
+margin: 0;
+padding: 0;
+text-align: center;
+color: #000000;
+}
+
+
+.oneColElsCtrHdr #container {
+/* width: 75em; */
+width: 100%;
+max-width: 1640px;
+background: #FFFFFF;
+margin: 0 auto;
+/* border: 1px solid #000000; */
+text-align: left;
+}
+.oneColElsCtrHdr #header {
+background: #DDDDDD;
+padding: 0 20px;  /* this padding matches the left alignment of the elements in the divs that appear beneath it. If an image is used in the #header instead of text, you may want to remove the padding. */
+background-color: #F8F8F8;
+}
+.oneColElsCtrHdr #header h1 {
+margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
+padding: 10px 0; /* using padding instead of margin will allow you to keep the element away from the edges of the div */
+font-size: xx-large;
+}
+.oneColElsCtrHdr #mainContent {
+padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
+background: #FFFFFF;
+/* display: flex; */
+}
+.oneColElsCtrHdr #footer {
+padding: 0 10px; /* this padding matches the left alignment of the elements in the divs that appear above it. */
+background:#DDDDDD;
+}
+.oneColElsCtrHdr #footer p {
+margin: 0; /* zeroing the margins of the first element in the footer will avoid the possibility of margin collapse - a space between divs */
+padding: 10px 0; /* padding on this element will create space, just as the the margin would have, without the margin collapse issue */
+}
+
+.style3 {color: #CC0000}
+.style4 {
+font-size: 10px;
+color: #333333;
+}
+a:link {
+color: rgb(59, 51, 173);
+}
+a:visited {
+color: rgb(59, 51, 173);
+}
+a:hover {
+color: rgb(59, 51, 173);
+}
+body,td,th {
+font-size: 12px;
+}
+.form_leftside {
+    width: 100%;
+    max-width: 800px;
+}

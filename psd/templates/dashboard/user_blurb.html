@@ -1,0 +1,124 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools %}
+  <ul class="object-tools">
+  	<li><a href="{% url "edit-user"  event_name=rr.event psdid=rr.psdid %}">Edit User</a></li>
+    <li><a href="{% url "event-manager" event_name=rr.event %}">Manage</a></li>
+    <li><a href="{% url 'admin:register_person_changelist' %}?regrecord={{ rr.id }}">People</a></li>
+    <li><a href="{% url 'admin:register_regrecord_changelist' %}?psdid={{ rr.psdid }}">Other RegRecords<a></li>
+    <li><a href="{% url "admin-account-view" psdid=rr.psdid %}">Profile</a></li>
+    <li><a href="{% url "admin-break-matches" event_name=rr.event psdid=rr.psdid %}">Break</a></li>
+    <li><a href="{% url "potential-matches" event_name=rr.event psdid=rr.psdid %}">Potentials</a></li>
+    <li><a href="{% url "date-sheet" event_name=rr.event psdid=rr.psdid %}">Date Sheet</a></li>
+  </ul>
+{% endblock %}
+
+{% block form_top %}
+<em>{{ rr.psdid }}</em>: {{ rr.htmlcode|safe}}
+{% endblock %}
+
+{% block content %}
+<h3>{{ rr.namestring }} (# {{ rr.psdid }}) for {{ rr.event }}</h3>
+<p>
+Description: {{rr.htmlcode|safe}}
+<p>
+<hr>
+Comments: {{ rr.comments }}
+<br>
+Referral: {{ rr.referred_by }}
+<br>
+Pals: {{rr.pals }}
+<br>
+Notes: {{ rr.notes }}
+
+<hr>
+<table>
+<tr>
+<td>
+Email:
+</td>
+<td>
+{{rr.email}}
+</td>
+</tr><tr>
+<td>
+Stationary: <td>{{rr.stationary}}
+<tr><td>
+Cancelled:<td> {{rr.cancelled }}
+<tr><td>
+Paid: <td>{{ rr.paid }}
+<tr><td>
+Pending:<td> {{rr.pending }}
+<tr><td>
+Here:<td> {{rr.here }}
+<tr><td>
+Is Group: <td>{{rr.is_group}}
+<tr><td>
+Matches:<td> {{rr.matches}}
+<tr><td>
+One-Way Matches: <td>{{rr.oneway}}
+<tr><td>
+Treat-as-woman/man: <td> {{rr.treat_as_woman}} / {{rr.treat_as_man}}
+<tr><td>
+Wants MF (i.e. Bi) / M / F: <td> {{rr.wants_mf}} / {{ rr.wants_m}} / {{rr.wants_f}}
+<tr><td>
+Straightish Male: <td> {{ rr.straightish_male }}
+<tr><td>
+Potential Matches: <td>
+<table>
+{% for r in recs %}
+<tr style="color: {% cycle 'blue' 'black' %}">
+<td>{{ forloop.counter }}</td>
+<td><a href="{% url "view-user"  event_name=rr.event psdid=r.psdid2 %}">{{ r.psdid2 }}</a></td>
+<td>{{ r.match }}-{% if r.gay_ok %}G{% endif %}{% if r.str_ok %}S{% endif %}</td>
+<td>{{ r.person2.minicode }}</td>
+<td>{{ r.person2.matches }}</td>
+<td>{{ reg|stringformat:"s" }}</td>
+</tr>
+{% empty %}
+No matches found!
+{% endfor %}
+</table>
+
+
+<tr><td>
+
+</table>
+<hr>
+
+Plain-Text Date Sheet
+<pre>
+{{ date_sheet }}
+</pre>
+
+
+Match Email Text
+<pre>
+{{ match_text }}
+</pre>
+
+<hr>
+
+  <ul class="object-tools">
+	<li><a href="{% url "edit-user"  event_name=rr.event psdid=rr.psdid %}">Edit User</a></li>
+    <li><a href="{% url "event-manager" event_name=rr.event %}">Manage</a></li>
+    <li><a href="{% url 'admin:register_person_changelist' %}?regrecord={{ object_id }}">People</a></li>
+    <li><a href="{% url 'admin:register_regrecord_changelist' %}?psdid={{ rr.psdid }}">Other RegRecords
+    <li><a href="{% url "admin-account-view" psdid=rr.psdid %}">Profile</a></li>
+    <li><a href="{% url "admin-break-matches" event_name=rr.event psdid=rr.psdid %}">Break</a></li>
+    <li><a href="{% url "potential-matches" event_name=rr.event psdid=rr.psdid %}">Potentials</a></li>
+    <li><a href="{% url "date-sheet" event_name=rr.event psdid=rr.psdid %}">Date Sheet</a></li>
+  </ul>
+
+
+
+
+{% endblock %}
+
+
+
+{% block after_field_sets %}
+Real id in database: {{ rr.id }}
+{% endblock %}
+

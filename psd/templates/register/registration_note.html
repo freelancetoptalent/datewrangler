@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Registration Note{% endblock %}
+
+
+{% block header %}
+<h2>NOTE:<br> Registration for Some Demographic Categories is Now Full.<br>  Some restrictions are in place.</h2>
+
+{% endblock %}
+
+{% block content %}
+
+
+Due to an imbalance in registration demographics, we are having
+to cut off registration for some categories of people. <b>Please read this
+carefully.</b></p>
+
+<p>If you:
+<ul>
+<li>are not looking for speed dates with men; and</li>
+<li>DO require your dates to be interested in men</li>
+</ul>
+then in order to register, you must also refer another new speed dater
+who does NOT meet that description. This means that, for example, straight men
+would need to refer a balancing companion, as would people of any gender who
+require their dates to be bisexual or pansexual. The person you refer can date
+separately and is not assumed to be your partner.
+
+<p>To way oversimplify, this maintains the ratio of straight men to straight
+women. Of course, not everybody is straight, and not everybody is a man or a
+woman. So we have the more general (but also more complicated) category:
+non-man-seeking-man-seeker-seekers. So this policy maintains the ratio of
+NMSMSSers to non-NMSMSSers, which from experience we have learned is one of the
+most important factors in how many people at a Poly Speed Dating event get
+to spend as much of their time speed dating as they can.
+
+<p>As you can see, we're still working on putting this into clear words. Sorry
+about that.
+
+
+<p>
+If you want to attend, and are affected by this policy, then follow these steps:
+<ol>
+<li>
+Find a friend who doesn't fall under the restriction.  <b>Our apologies, but friends who have already
+registered do not count.</b>
+</li>
+<li> 
+Have your friend register, and have them list you as a reference and give you
+their registration ID.
+</li>
+<li>
+Register yourself.  Cite your friend in the "remarks" field so we know who your balance is and so
+don't have you date someone you already know.  Include their
+registration ID.  We will then honor your registration.
+</li>
+</ol>
+
+<p>
+We are sorry to have to do this, but it is in the interest of
+making sure everyone who has already registered gets a full complement of
+dates.  Registering as a group is still okay.  And if in the end you can't
+join us for this one, we still plan to have more events
+in the future!
+<p>
+Again, sorry for the restriction.
+<p>
+
+
+<h3>Continue to registration....</h3>
+<ul>
+<p>Registration options (click on the one for you):</p>
+<blockquote> 
+  <p><a href="../individual/{{ event_name }}">Individual</a> - you may or may not have relationships 
+    at the moment, but you want to look for more of them right now</p>
+  <p><a href="../group/{{ event_name }}">Group</a> - You all are an existing relationship, and are looking for someone(s) together.</p>
+</blockquote>
+
+</ul>
+
+
+Note that even a gay woman friend helps a lot since such a high
+proportion of our women daters are either gay or bi (usually 75%).
+For that matter, a gay male friend would count too.
+
+<p>
+
+Please <a href="mailto:{{ event.info_email|default:"info@polyspeeddating.com" }}">e-mail us</a> if
+there is an issue or if there is something we should know!
+
+{% endblock %}

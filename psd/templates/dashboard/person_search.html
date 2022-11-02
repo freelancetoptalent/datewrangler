@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+{% load util %}
+
+{% block title %}
+PSD Person-Finder Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h1>Person-Finder Dashboard</h1>
+
+{% if search_made %}
+<h2>Search Results:</h2>
+
+<h3>Users:</h3>
+  {% for usr in users %}
+  <p>
+  <a href="{% url "admin:auth_user_change" usr.id %}">{{usr}} {{usr.first_name}} {{usr.last_name}}</a>
+  {% endfor %}
+<h3>Reg Records:</h3>
+ {% for rr in rrs %}
+ <p>
+ <a href="{% url "admin:register_regrecord_change" rr.id %}">{{rr}}</a>
+ {%endfor%}
+<h3>Person Records:</h3>
+ {% for p in precs %}
+ <p>
+ <a href="{% url "admin:register_person_change" p.id %}">{{p.psdid}}: {{p}}</a>
+ {% endfor%}
+
+
+<hr>
+{% endif %}
+
+<h2>Enter Name, PSDID or email to directly find prior participant or previously registered entity</h2>
+<p>
+<form action="" method="POST">
+{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="submit" value="Find!"></p>
+</form>
+
+{% endblock %}

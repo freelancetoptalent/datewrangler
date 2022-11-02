@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+{% load util %}
+
+
+{% block header %}
+Recess Record Creator Form
+{% endblock %}
+
+{% block content %}
+
+
+
+<h3>Current Breaks Scheduled</h3>
+There are currently {{num_breaks}} scheduled for {{event_name}}.
+
+<p>Current breaks scheduled:
+{% for key, value in breaks.items %}
+<pre>
+<b>{{key}}</b>
+{% for br in value %}    {{br.rounds}}
+{%endfor %}{% endfor %}
+</pre>
+
+<h3>Add/Replace Break</h3>
+<p>
+To create recess records (places where people take breaks) you give a name for the recess and then add a block of text with
+comma-seperated values for the rounds.  Each line is one of the options.  So if you had
+<pre>
+Break1
+3,4,5
+4,5,6
+6,7,8
+</pre>
+then everyone would get a "Break1".  Whether it was on rounds 3,4,5 or 4,5,6 or 5,6,7 would be randomly assigned for everyone.<form action="" method="POST">
+{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <p><input type="submit" value="{{button_name|default:"Submit"}}"></p>
+</form>
+
+{% endblock %}
+
+
+

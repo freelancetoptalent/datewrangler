@@ -1,0 +1,40 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Event Manager for {{ event_name }}{% endblock %}
+
+
+
+<h1 align="center">
+{% block header %}
+Event Manager for {{ event_name }}
+{% endblock %}
+</h1>
+
+{% block content %}
+
+{% for r in regs %}
+<p>[{{forloop.counter}}] {{r.namestring}} (# {{r.psdid}}): {{ r.htmlcode|safe }}
+{% if r.comments %}
+<br><font color="blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments: {{r.comments}}</font>
+{% endif %}
+{% if r.referred_by %}
+<br><font color="green">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referred By: {{r.referred_by}}</font>
+{% endif %}
+{% if r.hasNotes %}
+<br><font color="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notes: {{r.notes}}</font>
+{% endif %}
+{% endfor %}
+
+
+
+<hr>
+
+{% for act in actions %}
+<br> <a href="{% url "event-action" event_name=event_name action=act.action %}">{{act.action_description}}</a>
+{% endfor %}
+
+<hr>
+
+{% endblock %}

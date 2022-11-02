@@ -1,0 +1,63 @@
+
+
+<!-- Load Stripe.js on your website. -->
+<script src="https://js.stripe.com/v3"></script>
+<script>
+  var stripe = Stripe('{{ stripe_key }}');
+</script>
+
+{% for i in 3|looprange %}
+
+  {% ifequal i 1 %}One{% endifequal %}
+  {% ifequal i 2 %}Two{% endifequal %}
+  {% ifequal i 3 %}Three{% endifequal %}
+  {% ifequal i 4 %}Four{% endifequal %}
+
+  {% ifequal i 1 %}Ticket{% else %}Tickets{% endifequal %}:
+
+
+  <!-- Create a button that your customers click to complete their purchase. Customize the styling to suit your branding. -->
+  <button
+    style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+    id="checkout-button-{{ stripe_product }}{{ i }}"
+    role="link"
+  >
+    Pay
+  </button>
+{% ifequal i reg.people.count %}&nbsp;&nbsp;&nbsp;&nbsp;<i>This is the number of people you registered for. Use this
+  unless paying for others.</i>{% endifequal %}
+  <div id="error-message"></div>
+
+  <script>
+    var checkoutButton = document.getElementById('checkout-button-{{ stripe_product }}{{ i }}');
+    checkoutButton.addEventListener('click', function () {
+      // When the customer clicks on the button, redirect
+      // them to Checkout.
+      stripe.redirectToCheckout({
+        items: [{sku: '{{ stripe_product }}', quantity: {{i}}}],
+
+        // Do not rely on the redirect to the successUrl for fulfilling
+        // purchases, customers may not always reach the success_url after
+        // a successful payment.
+        // Instead use one of the strategies described in
+        // https://stripe.com/docs/payments/checkout/fulfillment
+        successUrl: 'http://{{ request.get_host }}{% url "account-view"  %}',
+        cancelUrl: 'http://{{ request.get_host }}{% url "account-view"  %}',
+        clientReferenceId: "{{reg.event}}-{{reg.psdid}}",
+        customerEmail: '{{ reg.email }}',
+        submitType: 'book'
+      })
+      .then(function (result) {
+        if (result.error) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer.
+          var displayError = document.getElementById('error-message');
+          displayError.textContent = result.error.message;
+        }
+      });
+    });
+  </script>
+
+{% endfor %}
+
+

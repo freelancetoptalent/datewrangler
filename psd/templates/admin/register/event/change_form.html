@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="{% url "event-manager" event_name=original.event %}">Manage</a></li>
+
+    <li><a href="{% url "check-in" event_name=original.event %}">Registration Check-In</a>
+    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+{% block form_top %}
+<em>Edit/modify {{ original.longname }}</em>
+{% endblock %}
+
+{% block after_field_sets %}
+Real id in database: {{ object_id }}
+{% endblock %}

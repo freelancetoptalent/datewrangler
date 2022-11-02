@@ -1,0 +1,29 @@
+{% extends 'admin/base.html' %}
+{% load util %}
+
+{% block title %}
+PSD Walk-In Registration Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h1>Walk-In Registration Dashboard for {{event}}</h1>
+
+<p>
+	<a href="{% url "walk-in-reg-individual" event_name=event.event %}">Register an Individual Walk-In</a>
+
+<p>
+	<a href="{% url "walk-in-reg-group" event_name=event.event %}">Register a Group Walk-In</a>
+
+<p>
+<h2>Enter PSDID or email to directly edit prior participant or previously registered entity</h2>
+<p>
+<form action="" method="POST">
+{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="submit" value="Go!"></p>
+</form>
+
+{% endblock %}

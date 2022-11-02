@@ -1,0 +1,23 @@
+
+OVERVIEW
+
+The overall system has three main components: 
+	* the registration system that users interact with to register for an event, 
+	* all of the code to look at the registrations and configure the number of dating tables and so forth, 
+	* 'matchmaker' - the code that actually does the scheduling.
+
+The last is in the 'matchmaker' directory, but the first two are combined in the 'register' directory. 
+
+
+Other directories of note:
+
+    * 'sites' - Template overrides for different sites are stored here.  This allows customization at the template level.
+    * 'tests' - Some (incomplete) unit testing of the scheduler and overall code lives here.
+    * 'psd' - High level org code such as the urls.py file.  This is where settings and so forth are kept.
+    * 'psd/commands' - Code for some commands that can be run from the command-line interface.  This calls code in the main part of the system.
+
+
+
+Files in register
+    * admin.py - Classes to build out the admin system
+    

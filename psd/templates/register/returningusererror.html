@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Error with Registration{% endblock %}
+
+
+{% block content %}
+
+    You appear to be a new dater trying to register with an email address that is already on file.
+    This probably means you are actually a pre-existing dater who is trying to register without
+    logging in first.  This is a bad idea.
+    <p>
+    Logging in will allow the system to give you fresh new dates, and not ones you have already
+    speed-dated at these events before.
+
+If you have forgotten your ID or your password, you can do a password reset by going to the
+ <a href="{% url "password-reset" %}">Password Reset Page</a> and handing over your email address.
+The system will then email you your old speed-dating ID and a link to reset your password.
+
+
+{% if login_required %}
+    <p>Please <a href="../accounts/login/">login and try again</a>.</p>
+{% endif %}
+<p>
+
+If this is in error, or you are trying to register as a group instead of an individual or vice-versa,
+ then please contact us.
+<p>
+- the organizers
+
+{% endblock %}

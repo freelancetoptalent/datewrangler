@@ -1,0 +1,33 @@
+= Potential Improvements to Poly Speed Dating Code =
+
+''note--much of this info, especially the task list, should probably be moved to the issue tracker part of this project''
+
+This document is a start at trying to coordinate multiple people working on this project. Getting up to speed is probably nontrivial.  First, see  diagram under "downloads" of all the moving parts of PSD and read the general overview below.  I highly recommend printing out the diagram and then reading the below.  It is a mess, I am sorry.  Ask questions as needed.  See first general task below.
+
+As a general overview, the overall structure is basically a chain of events: Registration, matching, schedule-building, and result generation.
+
+Registration: people register online.  The online piece is Django code written in python.  Their profiles are stored in a sqlite database.
+
+Matching: There is a separate (Java) program, called MatchMaker, that reads this database and figures out who can date whom, and stores that somewhere as a large matrix of all possible pairs.  
+
+Schedule-building: The third piece is a large, nasty, poorly designed chunk of R code.   This piece generates a list of everyone at a particular event and generates a schedule of dates.     This code also generates individual forms that we hand out to people.   They then date. 
+
+Result generation: The last step is to  collect the forms, enter them in the computer and do a final matching using a final program (written in R) to see who mutually liked each other.  We then tell them via an email merger program.
+
+Now the catches: as people register, things come up.  We continually modify registration records, deal with duplicate records, and so on.  We figure out who paid, and how.   We track who has registered and figure out if we need to close registration for some demographics to maintain good balance.  This should be done with a series of cleverly designed admin pages in Django that modify the sqlite database.  THIS IS THE AREA IN GREATEST NEED OF WORK!
+
+Also, across events, we track who dated whom so we never reschedule them in future events.  We allow people to change their registration as they change themselves.  We add and remove questions.  Ideally we easily extend this code to dating events for other freak-groups (e.g., kink, pansexual, geek, or whatever) with different sets of questions.
+
+The good news, I think, is everything is quite modular.  Everything talks to a central sqlite database, but given that, people can work on the various parts of the chain.  
+
+I hope that people reading this document will pick something they want to work on from the issues list.  Right now, one person per issue seems about right.  Only take on a project if you are going to really try and do it (unless it is a more long-term project, and then flaking out is more okay).  Many of the problems of various projects overlap, so if people could announce what they have accomplished, that could be useful so others can pirate code or ask for help on issues of connectivity, etc.
+  
+
+
+
+
+
+
+
+
+

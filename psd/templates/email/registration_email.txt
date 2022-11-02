@@ -1,0 +1,26 @@
+Dear {{ rr.nickname }} (#{{rr.psdid}}),
+
+{% if rr.reregistered %}You have updated your registration! {% else %}You are registered! {% endif %}{% if rr.flagged_NMSMSS %}That being said, your registration has been flagged as a currently restricted demographic (of some people looking for women only). The following assumes we can verify your balance companion.  (We still need to check your comments field.){% endif %}
+
+We look forward to seeing you at the event on {{ event.date|date:"l, F d" }} at {{ event.location }}.  Remember that you absolutely need to be there by {{event.deadlinetime|time:"f a"}} if you want to play.  Registration and pre-event socializing starts at {{event.starttime|time:"f a"}}.
+
+Your {% if rr.reregistered %}updated {% endif %}registration: {{ rr.geekcode }}
+
+Your ID Code is {{ rr.psdid }}.  Don't lose it!
+
+Event Details
+{{event.date|date:"l, F d"}} from {{event.starttime|time:"f"}}-{{event.stoptime|time:"f a"}}
+at {{event.location}} ({{event.locationURL}})
+{{event.address}}
+{{event.accessdetails}}
+Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+If you have received an email like this one with an ID different from {{rr.psdid}}, please let us know so we can make sure you are not double-registered.
+
+If you want to check your registration or change your registration, log in to your account at
+     {{ request.get_host }}{% url "account-login" %}
+Your username is {{ rr.psdid }}, the same as your ID Code.  {% if newuser %}Your password is {{ password }}.{% endif %}
+
+- The PSD Tech Folks
+{{event.info_email}}
+{{event.homepage_url}}

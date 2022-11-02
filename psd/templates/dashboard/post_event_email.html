@@ -1,0 +1,31 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Post-event emailer{% endblock %}
+
+<h1 align="center">
+{% block header %}
+Post-event emailer
+{% endblock %}
+</h1>
+
+{% block content %}
+
+<h3> Email for Event {{ event }} (Event Code '{{ event_name }}')</h3>
+
+This form is for emailing all attendees at a past PSD event. For instance,
+because they have matches!<p>
+
+<form name="post-event email" method="post" action="">
+{% csrf_token %}
+Subject line for mass email: {{ form.subject }}<br>
+Mass email: {{ form.body }}<br>
+Send everyone their matches, too? {{ form.send_matches }}<p>
+Start at record number #: {{ form.start_at }}<p>
+Really send the email or just do a test-render? (Check means really send.)  {{form.really_send}}<p>
+
+<input type="submit" name="send_email" value="Send that email!">
+</form>
+
+{% endblock %}

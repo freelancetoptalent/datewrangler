@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}About Freeform Tags with Poly Speed Dating{% endblock %}
+
+{% block header %}<h2>About Freeform Tags with Poly Speed Dating</h2>{% endblock %}
+
+{% block content %}
+
+<p>For the freeform question, fill in single words that identify you or specify
+what you are looking for, separated by commas or newlines. In many cases,
+you'll want to put the same words in both boxes. For instance, putting <i>bear</i> in
+both boxes would mean you're a bear looking for bears. Putting <i>museum</i> in
+both boxes would mean you like museums and want to meet other people who do too.</p>
+
+<p>You must use dashes to make compound words, like <i>rock-climbing</i>. (<i>Rock
+climbing</i> is invalid and will confuse the system).</p>
+
+<p>If you just want to describe yourself without stating a preference, put it
+in the right-hand box only. For instance, putting <i>smoker</i> on the right
+indicates you are a smoker, but do not care whether your matches also are.</p>
+
+<p>Similarly, if you watch to look for something without saying anything about
+yourself, put it only in the left-hand box. For instance, putting <i>astronaut</i>
+on the left indicates that you want to meet astronauts, but you are not one.</p>
+
+<p>Combining those two allows for options like putting <i>femme</i> on the left and
+<i>butch</i> on the right, meaning "I'm butch and would like to meet femme people".
+Similarly, putting <i>extravert</i> on the left and <i>introvert</i> on the right
+means that you yourself are an introvert, but prefer partners with a contrasting
+social personality.</p>
+
+<p align>
+You can indicate strong preferences with a varying number of exclamation marks, such as
+<i>nerd!</i> or <i>one-night-stand!!!</i>.
+</p>
+
+<h2>A Short FAQ</h2>
+
+Q: How does the matching work?<br>
+A: We prioritize matches that have shared terms. Only matches where both people use a term are impacted.
+
+<p>
+Q: What about misspellings and different words for the same thing?<br>
+A: We maintain a mapping of synonyms and misspellings, so similar words get
+treated as the same, as long as we notice them. But we don't always notice, so
+checking your spelling while filling out the form is not a bad idea.
+
+<p>
+Q: What happens if I am the only one who uses a term?<br>
+A: That is okay. It does not help or hurt your matches.
+
+<p>
+Q: Can I prevent potential matches with this?<br>
+A: You cannot make a date impossible with these free-form match words. No matter how many exclamation points
+you put on "adventure!!!!!" it won't stop you from matching with people who aren't adventurous (after all, not
+everybody is going to use every word that might describe them). What we DO do is promote matches that are positive,
+and promote them more if you use more exclamation points.
+<P>
+    Q: What if I want to avoid something?<br>
+    A: You can put "not" in front of your words, e.g., <i>not smoker</i> would penalize a match with someone who identified as a smoker.
+</P>
+
+<h2>So what words do I use?</h2>
+Good question! Use what you like, but for some example tags people have used, go <a href="{% url "about-page"  what="tagexamples" %}">here</a>.
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+== Checking out the database by hand ==
+
+The following, run on our server, will show you registered people:
+{{{
+sqlite3 public_html/mydb
+
+ sqlite> select * from register_person;
+}}}
+
+Listing the tables:
+{{{
+sqlite> .tables
+}}}
+
+
+== Useful way of browsing database directly ==
+    For many thing, I suggest you get a database viewer for sqlite. I use https://addons.mozilla.org/en-US/firefox/addon/5817/. It lets you view the raw contents of the DB.

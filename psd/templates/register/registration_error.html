@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load util %}
+
+{% block title %}
+PSD Registration Form- Step 2
+{% endblock %}
+
+{% block header %}
+<h2>There has been an error with registration</h2>
+{% endblock %}
+
+{% block content %}
+
+<p>
+Unfortunately, some field or another in the form you just filled out is not being parsed correctly.  Please hit the back button on your browser and fix the areas listed below, or email {{ event.info_email|default:"info@polyspeeddating.com" }}.<p>
+
+The Problems Found:<p>
+
+{% for field in rform %}
+  {% if field.errors %}
+    <strong>{{ field.label }}:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pform %}
+  {% if field.errors %}
+    <strong>{{ field.label }}:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.0 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #1:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.1 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #2:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.2 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #3:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+
+Sorry for any vagueness in the above, auto-generated, list of problems.  
+<p>
+Please hit the <b>Back</b> button, fix the problems, and resubmit.
+<p>
+- the organizers
+
+{% endblock %}

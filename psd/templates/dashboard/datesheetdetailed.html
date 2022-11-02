@@ -1,0 +1,77 @@
+<h2>Date Sheet for{{ rr.psdid }} at {{ event }}</h2>
+
+<small>
+<p>
+Comments: {{ rr.comments }}
+<br>
+Referral: {{ rr.referral }}
+<br>
+Notes: {{ rr.notes }}
+<br>
+<hr>
+Registered as: {{ rr.htmlcode|safe }}
+</small>
+<hr>
+<h3 align="center">{{rr.psdid}}: {{rr.minicode|safe}}</h3>
+
+<ul>
+
+<h2>Date Sheet</h2>
+<table>
+<th>
+<td>PSDID</td>
+<td>Friend?</td>
+<td>Table Name</td>
+<td>Response</td>
+<td>Mini Code</td>
+<td>Score</td>
+</th>
+
+
+{% for d in dates %}
+<tr bgcolor={% cycle "#AAAAAA" "#AAAA00" %}>
+
+<td>{{ d.round }}</td>
+<td align="right">{{ d.other_psdid }} </td>
+<td align="left">
+{% if d.friend_date %}
+(F)
+{%endif%}
+</td>
+
+<td align="right"> 
+{{ d.table }}
+</td>
+
+<td align="center">
+{% if d.we_filled %}
+{% if d.said_yes %}Yes{%else%}No{%endif%}
+{% else %}
+?
+{% endif %} 
+/
+{% if d.they_filled %}
+{% if d.they_said_yes %}Yes{%else%}No{%endif%}
+{% else %}
+?
+{% endif %}
+</td>
+
+<td>
+<small>{{ d.other_code }}</small>
+</td>
+
+<td>
+{{ d.match.score_string }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+
+
+
+</table>
+</ul>
+

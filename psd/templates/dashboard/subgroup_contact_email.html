@@ -1,0 +1,42 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Subgroup Contact Emailer{% endblock %}
+
+<h1 align="center">
+{% block header %}
+Subgroup Contact Emailer
+{% endblock %}
+</h1>
+
+{% block content %}
+
+<h3> Email for Event {{ event }} (Event Code '{{ event_name }}')</h3>
+
+This form is for emailing a selection of the attendees at a PSD event. For instance,
+because you have changed their matches!<p>
+
+<form name="subgroup email" method="post" action="">
+{% csrf_token %}
+<hr>
+Subject line: {{ form.subject }}<br>
+
+Dear,
+<br>
+Who to send email to: {{ form.psdids }}<br>
+Mass email: {{ form.body }}<br>
+<br>
+Love,
+<br>
+PSD Robot #4
+<hr>
+
+Send matches, too? {{ form.send_matches }}<p>
+
+Really send the email or just do a test-render? (Check means really send.)  {{form.really_send}}<p>
+
+<input type="submit" name="send_email" value="Send that email!">
+</form>
+
+{% endblock %}

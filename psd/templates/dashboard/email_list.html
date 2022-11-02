@@ -1,0 +1,41 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Event Manager for {{ event_name }}{% endblock %}
+
+
+
+<h1 align="center">
+{% block header %}
+Event Manager for {{ event_name }}
+{% endblock %}
+</h1>
+
+{% block content %}
+
+
+Comma-Seperated Email List (mailing list checked only)
+<pre>
+{% for r in regs %}{% if  r.add_to_mailings %}{{r.email}}
+{% endif %}{% endfor %}
+</pre>
+
+<hr>
+
+Comma-Seperated Email List (mailing list NOT checked only)
+<pre>
+{% for r in regs %}{% if not r.add_to_mailings %}"{{r.nickname}}", {{r.email}}
+{% endif %}{% endfor %}
+</pre>
+
+<hr>
+<hr>
+
+{% for act in actions %}
+<br> <a href="{% url "event-action" event_name=event_name action=act.action %}">{{act.action_description}}</a>
+{% endfor %}
+
+<hr>
+
+{% endblock %}

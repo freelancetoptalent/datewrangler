@@ -1,0 +1,42 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Childcare Requests for {{ event_name }}{% endblock %}
+
+
+
+<h1 align="center">
+{% block header %}
+Childcare Requests for {{ event_name }}
+{% endblock %}
+</h1>
+
+{% block content %}
+
+<table>
+<tr>
+<td>#</td><td>ID</td><td>Wants Childcare</td><td>Children</td>
+</tr>
+
+{% for r in regs %}
+<tr>
+<td>{{forloop.counter}}</td>
+<td><a href="{% url "view-user"  event_name=event_name psdid=r.psdid %}">{{ r.psdid }}</a></td>
+<td>{{r.wants_childcare}}</td>
+<td>{{r.children}}</td>
+</td>
+
+{% endfor %}
+
+</table>
+
+<hr>
+
+{% for act in actions %}
+<br> <a href="{% url "event-action" event_name=event_name action=act.action %}">{{act.action_description}}</a>
+{% endfor %}
+
+<hr>
+
+{% endblock %}

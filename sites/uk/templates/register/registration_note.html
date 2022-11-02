@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Registration Note{% endblock %}
+
+
+{% block header %}
+<h2>NOTE:<br> Registration for Some Demographic Categories is Now Full.<br>  Some restrictions are in place.</h2>
+
+{% endblock %}
+
+{% block content %}
+
+
+Due to an imbalance in registration demographics, we are having to cut
+off registration for solo men who are only looking for women unless
+they bring a woman friend of any sexual persuasion  (who dates separately and is not
+necessarily the man's partner).  This maintains the ratio of men seeking women to women, generally.  We are sorry to have to do this, but it
+is in the interest of making sure everyone who registered so far gets
+a full complement of dates.  Registering as a group is still okay.  We
+will try to have another event, assuming this one goes well!
+<p>
+We have to do this so that there are enough dates to go around for
+those who have registered.  Furthermore, it is important that those
+who register as looking for multiple genders get to go on dates with the full range of people that they are interested in.  This means that even a slight imbalance leads to problems.
+<p>
+If you want to attend, and are affected by this policy, then follow these steps:
+<ol>
+<li>
+Find a woman friend.  Our apologies, but friends who have already
+registered do not count.
+</li>
+<li> 
+Have your friend register, and have her list you as a reference and give you
+her registration ID.
+</li>
+<li>
+Register yourself.  Cite your friend in the "remarks" field so we
+don't have you date someone you already know.  Include her registration ID.  We will then honor your registration.
+</li>
+
+<li>Potentially collect free beverage or gift at the event for having
+someone cite you as a reference!</li>
+</ol>
+
+<p>
+
+
+Again, sorry for the restriction.
+<p>
+
+
+<h3>Continue to registration....</h3>
+<ul>
+<p>Registration options (click on the one for you):</p>
+<blockquote> 
+  <p><a href="../individual/{{ event_name }}">Individual</a> - you may or may not have relationships 
+    at the moment, but you want to look for more of them right now</p>
+  <p><a href="../group/{{ event_name }}">Group</a> - You all are an existing relationship, and are looking for someone(s) together.</p>
+</blockquote>
+
+</ul>
+<p>
+
+Please <a href="mailto:{{ event.info_email|default:"info@polyspeeddating.com" }}">e-mail us</a> if
+there is an issue or if there is something we should know!
+
+{% endblock %}

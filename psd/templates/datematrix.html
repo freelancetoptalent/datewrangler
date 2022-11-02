@@ -1,0 +1,40 @@
+<h2>Date Matrix Sheet for {{ event }}</h2>
+
+
+<table>
+<th>
+<td>PSDID</td>
+
+{% for r in rounds %}
+<td>{{r}}</td>
+{%endfor%}
+</th>
+
+{% for r in rr %}
+
+<tr bgcolor={% cycle "#FFFFFF" "#FFDDDD" %}>
+
+<td>{{forloop.counter}}</td>
+<td>{{r.psdid}}</td>
+
+{% for d in r.dates %}
+
+<td align="right">{{ d.other_psdid }} 
+<br>
+{% if d.friend_date %}
+(F)
+{%endif%}
+
+{{ d.match.score_string }}
+</td>
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+</ul>
+

@@ -1,0 +1,4 @@
+
+{% for act in actions %}
+<br> <a href="{% url "event-action" event_name=event_name action=act.action %}">{{act.action_description}}</a>
+{% endfor %}

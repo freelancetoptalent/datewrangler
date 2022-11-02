@@ -1,0 +1,99 @@
+{% extends 'dashboard/event_manager.html' %}
+
+{% load util %}
+
+{% block title %}Mult-break Form {{ event_name }}{% endblock %}
+
+
+{% load util %}
+
+
+{% block header %}
+Mult-break Form
+{% endblock %}
+
+{% block content %}
+
+Hey there, PSD staff person. To break a link:<br /><br />
+ * Put in the pair of PSD IDs!<br /><br />
+ * Put a general reason at the top.  All breaks will be given that reason.<br /><br />
+
+<hr>
+{% if not rform.is_valid or not pformset.is_valid %}
+<h3>Errors</h3>
+{% for field in rform %}
+  {% if field.errors %}
+    <strong>{{ field.label }}:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.0 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #1:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.1 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #2:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+
+{% for field in pformset.forms.2 %}
+  {% if field.errors %}
+    <strong>{{ field.label }} #3:</strong> {{ field.errors }}
+  {% endif %}
+{% endfor %}
+etc.
+{% endif %}
+
+<hr>
+
+<form name="multiBreak" method="post" action="">
+{% csrf_token %}
+Overall Reason: {{ rform.reason }}
+<hr>
+
+<table>
+<tr><td>#</td>
+<td>psdid</td>
+<td>other psdid</td>
+<td>friend ok</td>
+<td>reason</td></tr>
+
+{{ pformset.management_form }}
+{% for pform in pformset.forms %}
+<tr>
+<td>
+<h2>#{{ forloop.counter }}
+
+<td>
+{{ pform.psdid }}
+<td>
+{{ pform.other_psdid }}
+<td>
+{{ pform.friend_ok }}
+<td>
+{{ pform.notes }}
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+
+  <p align="center">
+    <input name="Submit" value="Break Links!" type="submit">
+    <br>
+  </p>
+
+</form>
+
+{% endblock %}
+
+
+

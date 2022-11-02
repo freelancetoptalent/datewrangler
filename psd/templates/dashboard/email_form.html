@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+
+{% load util %}
+
+{% block header %}
+<h2 align="center">Email Form</h2>
+{% endblock %}
+
+
+{% block content %}
+
+
+<form name="emailForm" method="post" action="">
+ {% csrf_token %}
+<pre>
+To: {{ recipients }}
+
+Subject: :  {{ rform.subject }}
+
+Body:
+{{ rform.comments }}
+</pre>
+
+
+  <p align="center">
+    <input type="submit" name="Email" value="Email!">
+    <br>
+  </p>
+
+
+</form>
+
+{% endblock %}
+

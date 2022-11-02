@@ -1,0 +1,229 @@
+#summary Setting up the Django registration and matching program
+
+This file describes the steps for setting up a PSD website and registration system.
+
+Note that there are two main parts: the static website with general info, and the registration site that displays event information, handles registrations, and allows for administration of the event.
+
+If you are just working on the code base, then you don't need to set up the static site at all.  Just do the Django System (DateWrangler) part.
+
+= What is `DateWrangler' =
+DateWrangler is a body of code, primarily in Python and living inside a Django system, that handles registration and orchestration of a speed dating event.   The Django admin interface is extended to allow for editing and viewing registrations, tracking people across multiple events and, most importantly, running a specific event.   
+
+DateWrangler is distinct from a static site that has the "who we are" stuff and other organization info.   DateWrangler is just the nuts and bolts of running events.
+
+
+
+= Setting up SF PSD's DateWrangler  System =
+
+== 1 Install necessary programs ==
+
+Install Python http://python.org/download/
+
+Install SVN http://subversion.apache.org/packages.html
+
+Install sqlite3 http://www.sqlite.org/download.html
+
+Install Django (but no need to install apache stuff if you are just doing code development and need a test bed) (Django does not currently work with Python 3.0). For django install see:
+{{{
+https://docs.djangoproject.com/en/dev/topics/install/?from=olddocs
+}}}
+
+== 3 Checkout django code ===
+
+Put this in your top-level directory
+{{{
+svn checkout https://polydate.googlecode.com/svn/trunk/django webapp --username SOMETHING
+svn checkout https://polydate.googlecode.com/svn/trunk/django staging --username SOMETHING
+}}}
+
+The first is for your live version, the second is for staging/testing.  You can call webapp anything you like, but you just need the proper path for step 4, below.  
+
+== 4 Add django stubs to public_html ==
+
+(Not needed for code/development testing)
+
+Somewhere in public_html you need a django folder with some wsgi stubs, one to point to webapp, one to point to staging.
+
+Get the urls to work right by contacting your site admin.
+
+== 5 Make a webserver-and-you-writable 'logs' directory ==
+
+We recommend ../webapp/logs
+
+Do for staging as well.  You will enter the log path name in settings.py below.
+
+
+== 5.B Make a template directory in the sites directory ==
+
+This will be where you put templates to override the base templates if you want to customize the look and feel of the registration pages.
+
+== 6 Setup settings.py ==
+First copy the settings_template.py from the django folder to django/psd/settings.py.  Edit the template, add your passwords and DO NOT CHECK IT IN!   Search in the file for "XXX" for things you need to change.
+
+There are a lot of pathnames that you will need to configure.  In particular, the template location pathnames (which should include the directory you made in the previous step).
+
+Be sure to also change the "secret key" line.
+
+== 5.C Enter manager email ==
+
+Get email information from the manager for the site and enter it in.  This is so django can send email as the manager.
+
+Recommendation: make gmail account for this so you can have the users give you password that you enter into settings.py.
+
+
+== 6.B Change urls.py (OPTIONAL) ==
+Change urls.py in webapp to display the "maintenence" message if you are feeling paranoid about folks browsing.
+
+
+== 7 Build your database ==
+
+In webapp/psd/:
+{{{
+python manage.py syncdb
+}}}
+
+Then be sure to make your database readable by the web application.  E.g.,
+{{{
+chmod a+rwx mydb
+}}}
+You may also need to change permissions in the folder holding the database.
+
+
+== 8 Set up location, gender, and kinkiness stubs ==
+
+In staging/psd:
+{{{
+python psdmanage.py matchquestions
+}}}
+
+Or you can do this and make a test event too by saying
+{{{
+python psdmanage.py testdb
+}}}
+
+== 8.B Make the log-file web server writable ==
+
+When you run the python runserver stuff, it makes a log file, and the log file is only writable by you.  This will cause havoc when the webserver tries to append.
+
+{{{
+chmod a+w  logs/logfile.log
+}}}
+
+== 9 Log into admin ==
+
+Either go via localhost, do a 
+{{{
+python manage.py runserver
+}}}
+in staging/psd/, and then find admin:
+{{{
+http://127.0.0.1:8000/admin/
+}}}
+or do your url to your real site.
+{{{
+http://www.polyspeeddating.com/psd/columbus/reg/
+}}}
+
+== 9.B Make administrators as needed ==
+
+Go to 
+{{{
+http://www.polyspeeddating.com/psd/columbus/reg/admin/
+}}}
+
+Go into the User objects and add folks as needed (e.g., if you are hosting a site for some other organization).   
+
+== 10 Make an Event object ==
+
+In admin, make an event object.  Give it a name such as 'event1'
+
+== 11 Fix location object ==
+
+In admin, go to Match Question, edit Location and add the relevant locations.   These will be string together in sentences so use "the north bay" and so on.  The code should be all caps, up to two letters long.  E.g., "SF" or "PN".
+
+
+== 12 Test registration ==
+
+{{{
+http://127.0.0.1:8000/individual/event1
+}}}
+
+== 13 Copy database to webapp ==
+
+Once things look good, delete your test registrations and copy the 
+database over to where webapp looks for it.
+
+== 14 Link up Paypal ==
+
+Make paypal send IPN notifications to
+{{{
+http://root-to-django/endpoint/
+}}}
+
+== 15 Copy base.html to site template directory ==
+
+Copy the base.html from the templates folder to your overriding template directory and edit it so it looks the way you want.
+
+
+
+
+= Setting up Date Sheet Generator =
+
+The date sheet generator uses ReportLab, a python package that allows for the generation of pdfs.   Installation guide here:
+{{http://www.reportlab.com/software/installation/}}
+
+Have your administrator for the website install the ReportLab package for the version of python that Django uses.
+
+== Test It ==
+Run the schedule maker from
+{{{
+root-to-django/manage/event1/
+}}}
+
+
+
+
+
+= Setting up Static Site =
+
+This is a checklist for setting up an entire new site
+
+
+== 1 Make svn branch of static website (optional) ==
+This is so you can have an svn repository on your static website, which might make things easier for you.
+
+== 2 Checkout Static Website ==
+
+Move your old public_html over and then check out your real one:
+{{{
+svn checkout .../newbranch/website public_html
+}}}
+
+Note: 'newbranch'='trunk' if no new branch made.   
+
+
+= DEPRECATED: Setting up the R code =
+
+We have ported (thanks Aaron) the scheduling to python.   No need for R anymore except for the demographics program.   
+
+This needs to be done so you can run the demographic and scheduling parts of the program.
+
+== Install R on the system ==
+
+See the web (http://www.r-project.org/).  Should be easy.
+
+
+== Install RSQLite for R ==
+
+Get the file and then run
+{{{
+R CMD INSTALL RSQLite-<version>.tar.gz
+}}}
+
+(I think)
+
+== Test it ==
+Run the demographics command from
+{{{
+root-to-django/manage/event1/demographics
+}}}

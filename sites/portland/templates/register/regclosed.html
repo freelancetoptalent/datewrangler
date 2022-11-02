@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Pre-Registration is Now Closed{% endblock %}
+
+
+{% block header %}
+{% if frozen %}
+<h2>Pre-Registration and Profile Updating is Now Closed</h2>
+{% else %}
+<h2>Pre-Registration is Now Closed</h2>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if frozen %}
+Pre-registration and profile updating is now closed.
+<p>
+If you are trying to update your profile, just ask when checking in at the event.
+<p>
+{% else %}
+Pre-registration is now closed.
+<p>
+{% if not user.is_authenticated %}
+If you are trying to update your profile, <a href="{% url "account-login" %}">log in</a> using your PSD ID.
+<p>If you have forgotten your ID or your password, you can do a
+ password reset by going to the <a href="../reset/">Password Reset
+ Page</a> and handing over your email address.
+ </p>
+{%endif%}
+
+<p>
+If you are trying to register, you can contact us last-minute and
+potentially register at the door.  Before you do, note our current
+demographic limitations.   We are looking for people to fill in a few
+undersubscribed areas.
+<p>
+  At this time, we are only considering people interested in dating men (and possibly other categories as well).
+{% endif %}
+
+<p>   Be sure to add yourself to the
+mailing list to be updated for future events by clicking <a
+href="{{ event.mailing_list_url|default:"http://polyspeeddating.com/mailman/listinfo/psd" }}">here</a> and
+filling out the subsequent form.  Your email will not be used for
+evil.
+
+{% endblock %}

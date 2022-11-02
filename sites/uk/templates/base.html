@@ -1,0 +1,73 @@
+{% load util %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta property="og:title" content="Poly Speed Dating UK" />
+        <meta property="og:description" content="Sign up now to meet other poly folks for dating and dancing!" />
+        <meta property="og:image" content="http://polyspeeddating.co.uk/psd-thumbnail.png" />
+        <title>Poly Speed Dating</title>
+        <link rel="stylesheet" type="text/css" href="http://polyspeeddating.co.uk/style.css" />
+
+        <script type="text/javascript">var switchTo5x=true;</script>
+        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript">stLight.options({publisher: "ur-e55f1f15-e014-1579-2c09-3468e98da0aa"}); </script>
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="mainContent">
+
+                <div id="header">
+                    <!-- end #header -->
+                    <img src="http://www.polyspeeddating.co.uk/psd_title.png" alt="Poly Speed Dating" width="820" height="135" />
+                </div>
+
+                <div id="menuContainer">
+                    <div id="menu" class="menu">
+                        <ul>
+                            <li><a href="http://www.polyspeeddating.co.uk/index.php"><span>Home</span></a></li>
+                            <li><a href="http://www.polyspeeddating.co.uk/faq.php#basics"><span>About Us</span></a></li>
+                            <li><a href="http://www.polyspeeddating.co.uk/faq.php"><span>FAQ</span></a></li>
+                            <li><a href="http://www.polyspeeddating.co.uk/register.php"><span>Register<br /></span></a></li>
+                            <li><a href="http://www.polyspeeddating.co.uk/pastevents.php"><span>Past Events</span></a></li>
+                            <li><a href="http://www.polyspeeddating.co.uk/contact.php"><span>Contact</span></a></li>
+                        </ul>
+                    </div>
+                    <div id="syndicate" class="menu">
+                        <span class='st_sharethis_custom' displayText='ShareThis'></span>
+                        <a target="_blank" href="https://twitter.com/PolySpeedDateUK" alt="Follow Poly Speed Dating UK on Twitter"><img src="http://www.polyspeeddating.co.uk/syn-twitter-ico.png" /></a>
+                        <a target="_blank" href="http://www.facebook.com/psduk" alt="Like Poly Speed Dating UK on Facebook"><img src="http://www.polyspeeddating.co.uk/syn-facebook-ico.png" /></a>
+                    </div>
+                </div>
+
+                <div id="text">
+                    <h1>{% block header %}{% endblock %}</h1>
+                    {% block content %}
+                    Our apologies, but you've navigated your way to a page that shouldn't be displayed.
+                    Email us at {{ event.info_email|default:"info@polyspeeddating.co.uk" }} with the URL where you saw
+                    this so we can stop it happening again.
+                    {% endblock content %}
+                </div>
+
+                <div id="footer">
+                    {% block footer %}
+
+                    <p align="center">
+
+                        {% if not user.is_anonymous %}
+
+                        You are logged in as {{ user.username }} ~
+                        <a href="{% url "account-logout" %}">logout</a> ~
+                        <a href="{% url "account-view" %}">view registration</a> ~
+                        <a href="{% url "password-change" %}">change password</a>
+                        {% endif %}
+                    </p>
+
+                    {% endblock footer %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

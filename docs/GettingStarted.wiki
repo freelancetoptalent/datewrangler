@@ -1,0 +1,33 @@
+#summary DEPRECATED.  This page tells you how to get started looking at the code as a potential DEVELOPER.
+#labels Phase-Implementation
+
+
+= Getting Started with the Code =
+
+First get the code base on your computer.  Do a SVN checkout as specified under the 'Source' table of google code.
+
+== Django Portion ==
+
+You need to install Python and Django.  Sadly, I can't remember how this is done.  Things work with Python 2.7.
+
+Once that is done, look at the DjangoNotes and try and run the server with the test database.  Play around a bit.
+
+
+
+
+== R Portion ==
+
+Install R and get it running.
+
+Now try running the script to show who is registered:
+
+{{{
+R -f Rs/showStats.R
+}}}
+
+This picks up the csv files you generated with the Java code and does some demographic computation.
+
+Once this is running, the code is up and going.   The next step is to try and run showStats.R in the interactive R word (open R, open showStats.R, and cut and paste the script into the interactive window.  
+
+Once you have this done, you can try walking through "runMatches.R" which is a script to go through the entire process.
+ 

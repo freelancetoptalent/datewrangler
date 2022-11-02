@@ -1,0 +1,7 @@
+{% load util %}
+{% if message %}
+{{message|safe}}
+{%endif%}
+YOUR DATE SHEET:
+{% for d in dates %}Round {{ d.round }} {{ d.table }} with {{d.other_psdid}} ({{ d.other_nick }}){% if d.friend_date %}(Friend){%endif%}.
+{% endfor %}

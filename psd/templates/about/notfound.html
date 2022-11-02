@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}About Info Page Not Found{% endblock %}
+
+
+<h1 align="center">
+{% block header %}
+There has been an error.
+{% endblock %}
+</h1>
+
+{% block content %}
+
+We apologize, but the information page for "{{ what }}" has not been found.  Please check the url and try again.
+
+<p>
+- the organizers
+
+{% endblock %}

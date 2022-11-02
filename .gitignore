@@ -1,0 +1,14 @@
+*.pyc
+.project
+.cproject
+.pydevproject
+local_settings.py
+.DS_store
+.settings
+*~
+mydb*
+db.sqlite3
+logs/
+settings_files
+py3/
+.idea/

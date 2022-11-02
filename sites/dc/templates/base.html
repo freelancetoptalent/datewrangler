@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+{% load util %}
+
+{% block title %}Poly Speed Dating MidAtlantic{% endblock %}
+{% block styles %}
+{{ block.super }}
+<style type="text/css">
+   .oneColElsCtrHdr #header, .oneColElsCtrHdr #footer {
+      background: #FFFFFF;
+  }
+</style>
+{% endblock %}
+
+ {% block header %}
+    {% comment %}FIXME: this is too ugly
+    nested header tags <h1><h1></h1><h2></h2></h1>
+    {% endcomment %}
+    <h1 align="center">&nbsp;</h1>
+    <h2 align="center">&nbsp;</h2>
+{% endblock %}
+
+{% block container_top %}
+<CENTER>
+<a href="http://polyspeeddatingmidatlantic.org/"><img src="http://polyspeeddatingmidatlantic.org/psd_title.png" alt="Poly Speed Dating MidAtlantic" width="820" height="135"></a>
+</CENTER>
+{% endblock container_top %}
+
+
+{% block extra_footer_links %}
+<a href="mailto:{{ event.info_email|default:"BmorePoly@gmail.com" }}">Contact Us</a> |
+<a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">Log In</a> |
+<a href="{{ event.mailing_list_url|default:"http://meetup.com/BmorePoly" }}"> Join BmorePoly (our Mailing List)</a>
+{% endblock extra_footer_links %}

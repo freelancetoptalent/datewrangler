@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+
+{% block title %}PSD Registration Form- Step 2{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Registration Form Submitted</h2>
+
+{% if reregistered %}
+<h2>You have updated your registration</h2>
+{% else %}
+<h2>You have completed Step 1 of registration</h2>
+{% endif %}
+<p>
+Your public name and ID is {{reg.nickname}} (# {{ reg.psdid }}).
+</p>
+<p>This is how you are registered:<br><ul>{{ reg.htmlcode|safe }}</ul>
+</p>
+<p align="right">
+Is there a mistake in your registration?
+{% if reg.is_group %}
+<a href="{% url "group-registration"  event_name=reg.event %}">Re-register</a>!
+{%else%}
+<a href="{% url "individual-registration"  event_name=reg.event %}">Re-register</a>!
+{%endif%}
+
+
+{% if reg.straightish_male and event.no_ssm %}
+<hr>
+<h2>Did you remember to list your woman-identified companion's ID Code (as per the <a href="{% url "registration-note" event_name=reg.event %}">note on demographics</a>)?</h2>
+<p>  Right now, you have the following in your comments field: "{{reg.comments}}"
+<hr>
+{% endif %}
+
+</p>
+
+{% if reg.new_user %}
+Please note that you have been automatically logged in as user {{ reg.psdid }}.
+Your automatically generated password has been sent to you via e-mail.
+{% endif %}
+
+<p>
+Thank you for giving us your information.  We will treat it with care
+and only use it to match you up with compatible and (hopefully)
+scintillating folks for the actual event.
+</p>
+<p>
+You should receive an email confirmation shortly.  If not, please contact us.
+</p>
+
+{% if not reg.paid %}
+{% if reregistered %}
+<h2>If you haven't paid yet, you can do so now!</h2>
+{% else %}
+<h2>Step 2:  Now you must pay!</h2>
+{% endif %}
+<p>
+To pay, please follow the link below to PayPal. Your payment will be going to
+<i>{{ event.paypal_email|default:"info@polyspeeddating.com" }}</i>.
+Pre-registration price is ${{ event.cost }}.00 per person.   Door price is ${{ event.doorcost}}.00 per person.
+If you do not wish to use PayPal, then please contact us directly and we will arrange
+alternate means for you to pay.
+</p>
+
+{% for i in 4|looprange %}
+
+{% ifequal i 1 %}One{% endifequal %}
+{% ifequal i 2 %}Two{% endifequal %}
+{% ifequal i 3 %}Three{% endifequal %}
+{% ifequal i 4 %}Four{% endifequal %}
+
+{% ifequal i 1 %}Person{% else %}People{% endifequal %}:
+{% ifequal i reg.people.count %}&nbsp;&nbsp;&nbsp;&nbsp;<i>This is the number of people you registered for. Use this button
+unless you're paying for other people.</i>{% endifequal %}
+
+{% ifequal event.payment_systems wepay %}
+<a href="{% url wepayredirect event.event reg.psdid i %}">imagine a wepay image</a>
+{% else %}
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="{{ event.paypal_email|default:"info@polyspeeddating.com" }}">
+<input type="hidden" name="item_name" value="{{ i }} {% ifequal i 1 %}Person{% else %}People{% endifequal %} ({{ reg.psdid }})">
+<input type="hidden" name="amount" value="{% widthratio i 1 event.cost %}.00">
+<input type="hidden" name="shipping" value="0.00">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="return" value="http://{{ request.get_host }}{% url "account-view"  %}">
+<input type="hidden" name="cancel_return" value="http://{{ request.get_host }}{% url "account-view"  %}">
+<input type="hidden" name="cn" value="Additional information">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="tax" value="0.00">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="bn" value="PP-BuyNowBF">
+<input type="hidden" name="custom" value= "{{reg.event}}-{{reg.psdid}}">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" border="0" name="submit" alt="PayPal">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+{% endifequal %}
+
+{% endfor %}
+{% endif %}
+
+
+<h3 align="center">Questions or concerns?</h3>
+<h3 align="center">Email <a href="mailto:{{ event.info_email|default:"info@polyspeeddating.com" }}">Universal(ish) Speed Dating</a></h3>
+
+{% endblock %}
+

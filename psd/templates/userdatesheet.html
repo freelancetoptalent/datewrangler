@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Date Sheet for  {{user.username}}{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+{% for m in messages %}
+<br>{{m}}</br>
+
+{% endfor %}
+
+
+
+<form name="datesheet" method="post" action="" style="display:flex; gap: 50px; justify-content: space-between;">
+{% csrf_token %}
+<div style="width: 50%;">
+<ul>
+    <h2>Date Sheet for {{ rr.psdid }} at {{ event }}</h2>
+<table style="width: 100%;">
+<tr bgcolor =  "#DDDDDD" style="height: 30px;"> 
+    <th></th>   
+    <th align="center">PSDID</th>
+    <th align="center">Table</th>
+    <th align="center">Check for Yes</th>
+<!--<td>Comments</td>-->
+</tr>
+
+
+    
+{% for d in dates %}
+<tr bgcolor={% cycle "#fff" "#DDDDDD" %} style="height: 30px;">
+
+    <td >{{ d.round }}</td>
+    <td align="center">{{ d.other_psdid }}
+    {% if d.friend_date %}
+    (F)
+    {%endif%}
+    </td>
+
+    <td align="center">
+    {{ d.table }}
+    </td>
+
+    <td align="center">
+    {% if d.other_psdid %}
+        <input  name="yes" type="checkbox" value="{{ d.other_psdid }}" {% if d.said_yes %}CHECKED {%endif%} style="accent-color: rgba(15, 156, 191, 0.897);">
+    {% endif %}
+    </td>
+<!--
+<td align="left">
+<input name="notes" type="text" value="">
+</td>
+-->
+
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+
+
+</ul>
+<p>(F) denotes a friendship date.</p>
+</div>
+
+
+<div style="width: 100%; max-width:500px;display: flex;flex-direction: column;">
+
+
+<table>
+
+<h2>Cruises:</h2>
+
+{{ cformset.management_form }}
+{% for cform in cformset.forms %}
+<tr>
+
+    <td>
+        <h3>{{ forloop.counter }}
+    <td>
+{{ cform.other_psdid }}
+
+
+
+{% endfor %}
+</tr>
+</table>
+
+<input type="submit" value="submit matching data" style="width:48%; height:40px;background-color: rgba(15, 156, 191, 0.897); border: none;margin-top: 100px;color: #fff;">
+</div>
+
+</form>
+
+
+{% endblock %}
+
+
+

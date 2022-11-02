@@ -1,0 +1,38 @@
+{% extends "admin/change_form.html" %}
+{% load util %}
+{% load i18n %}
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    <li><a href="{% url "event-manager" event_name=original.event %}">Manage</a></li>
+    <li><a href="{% url 'admin:register_person_changelist' %}?regrecord={{ object_id }}">People</a></li>
+    <li><a href="{% url 'admin:register_regrecord_changelist' %}?psdid={{ original.psdid }}">Other RegRecords</a></li>
+    <li><a href="{% url "admin-account-view" psdid=original.psdid %}">Profile</a></li>
+    <li><a href="{% url "view-user"  event_name=original.event psdid=original.psdid %}">View</a></li>
+    <li><a href="{% url "admin-break-matches" event_name=original.event psdid=original.psdid %}">Break</a></li>
+    <li><a href="{% url "potential-matches" event_name=original.event psdid=original.psdid %}">Potentials</a></li>
+    <li><a href="{% url "date-sheet" event_name=original.event psdid=original.psdid %}">Date Sheet</a></li>
+    <li><a href="{% url "update-reg"  event_name=original.event psdid=original.psdid %}">Update</a></li>
+    <li><a href="{% url "match-reg"  event_name=original.event psdid=original.psdid %}">Match</a></li>
+    <li><a href="{% url "individual-email"  event_name=original.event psdid=original.psdid %}">Email</a></li>
+    <li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+{% block form_top %}
+<h3>{{original.psdid}} for {{original.event}}</h3>
+<em>{{ original.psdid }}</em>: {{ original.htmlcode|safe }}
+<p>
+  Number of dates scheduled: {{ original.num_dates }}
+</p>
+{% endblock %}
+
+{% block after_field_sets %}
+Real id in database: {{ object_id }}
+<p>
+{% if original.notes|paypalrefund %}
+Link to payment: '<a href="{{ original.notes|paypalrefund  }}" target="_blank">{{ original.notes|paypalrefund  }}</a>' (maybe)
+{% endif %}
+
+{% endblock %}

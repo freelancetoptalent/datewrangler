@@ -1,0 +1,31 @@
+#summary DEPRECATED  Manual for using the admin interface for the django web app handling registration and scheduling.
+
+= Note: We have a doc manuel that has much more complete information now.  Contact us. =
+
+= Introduction =
+
+Django is a software package built on top of Python.  We have used it to implement the registration, scheduling, and matching system.  One of the major pieces of this is the admin interface where event organizers can review who has registered, edit registrations, and so on.  It also allows for handling check-in, the scheduling of the dates, the printing of date sheets, and the entering of date-sheets post-event.
+
+
+= Overview =
+The main page lists all the objects you can mess with.  The crucial ones are RegRecords, People, Users, and Events.
+
+= Reg Records and People =
+
+A RegRecord is the form for a group or individual registering for a single event.  So for every dating unit at a specific event, there is a single RegRecord.  If a person registers for multiple events, there will be multiple reg records.
+
+
+
+
+= User =
+When someone registers, they get a User account.  This is how django allows for logging in and out and all that jazz.  A user account is for a specific email address.  It is given a PSD ID for the username.  If someone changes their email, then it should be changed here.
+
+WARNING: the RegRecord also holds an email.  This can cause problems if they get out of alignment.  It is a problem with the current design.
+
+
+= Admin Weirdness and Misc. Power-User Stuff =
+
+You can search in the admin interface with URLs such as
+{{{ http://127.0.0.1:8000/admin/register/regrecord/?event=uptown1&matches__lt=10 }}}
+This will look for all folks with less than 10 matches at the uptown1 event.
+

@@ -1,0 +1,14 @@
+Dear {{ rr.nickname }} (#{{rr.psdid}}),
+
+Thank you for attending our event.
+
+{% if send_matches %}
+{{ match_text|safe }}
+
+If you have any questions, please email us at {{ event.info_email|default:"info@polyspeeddating.com" }}.
+{% endif %}
+
+Love,
+PSD Robot #4
+{{ event.info_email|default:"info@polyspeeddating.com" }}
+{{ event.homepage_url }}

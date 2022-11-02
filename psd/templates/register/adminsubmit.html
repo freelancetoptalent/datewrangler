@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+
+{% block title %}Administrator Finalize New Walk-In Registration{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Registration Form Submitted</h2>
+
+{% if reg.reregistered %}
+<h2>This has been a registration update.</h2>
+{% else %}
+<h2>This has been an initial registration for this event.</h2>
+{% endif %}
+<p>
+Public name and ID is {{reg.nickname}} (# {{ reg.psdid }}).
+</p>
+<p>{{reg.nickname}} registered as: <br><ul>{{ reg.htmlcode|safe }}</ul>
+</p>
+<p align="right">
+<a href="{% url "update-reg"  event_name=reg.event psdid=reg.psdid %}">Re-register</a>!
+
+{% if mark_as_here %}
+<h2 align="center">{{reg.psdid}} marked as here</h2>
+{% else %}
+<h2 align="center">{{reg.psdid}} NOT marked as here</h2>
+{% endif %}
+
+<hr>
+<h1>Walk-In Registration Dashboard for {{event}}</h1>
+
+<p>
+	<a href="{% url "walk-in-reg-individual" event_name=event.event %}">Register an Individual Walk-In</a>
+
+<p>
+	<a href="{% url "walk-in-reg-group" event_name=event.event %}">Register a Group Walk-In</a>
+<p>
+	<a href="{% url "event-manager"  event_name=event.event %}">Go to Event Manager</a>
+
+{% endblock %}
+

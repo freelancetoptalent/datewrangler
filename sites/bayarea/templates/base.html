@@ -1,0 +1,142 @@
+{% load util %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{% block title %}Poly Speed Dating{% endblock %}</title>
+    <style type="text/css">
+      <!--
+          body {
+	  font: 100% Verdana, Arial, Helvetica, sans-serif;
+	  background: #000000;
+	  margin: 0;
+	  padding: 0;
+	  text-align: center;
+	  color: #000000;
+	  background-color: #232323;
+          }
+
+
+          .oneColElsCtrHdr #container {
+	  width: 75em;
+	  background: #FFFFFF;
+	  margin: 0 auto;
+	  border: 1px solid #000000;
+	  text-align: left;
+          }
+          .oneColElsCtrHdr #header {
+	  background: #DDDDDD;
+	  padding: 0 10px 0 20px;  /* this padding matches the left alignment of the elements in the divs that appear beneath it. If an image is used in the #header instead of text, you may want to remove the padding. */
+	  background-color: #F8F8F8;
+          }
+          .oneColElsCtrHdr #header h1 {
+	  margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
+	  padding: 10px 0; /* using padding instead of margin will allow you to keep the element away from the edges of the div */
+	  font-size: xx-large;
+          }
+          .oneColElsCtrHdr #mainContent {
+	  padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
+	  background: #FFFFFF;
+          }
+          .oneColElsCtrHdr #footer {
+	  padding: 0 10px; /* this padding matches the left alignment of the elements in the divs that appear above it. */
+	  background:#DDDDDD;
+          }
+          .oneColElsCtrHdr #footer p {
+	  margin: 0; /* zeroing the margins of the first element in the footer will avoid the possibility of margin collapse - a space between divs */
+	  padding: 10px 0; /* padding on this element will create space, just as the the margin would have, without the margin collapse issue */
+          }
+        -->
+    </style>
+    <link href="/menu3/styles.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+      <!--
+          .style3 {color: #CC0000}
+          .style4 {
+	  font-size: 10px;
+	  color: #333333;
+          }
+          a:link {
+	  color: #CC0000;
+          }
+          a:visited {
+	  color: #660000;
+          }
+          a:hover {
+	  color: #FF0000;
+          }
+          body,td,th {
+	  font-size: 12px;
+          }
+        -->
+    </style>
+
+  </head>
+
+  <body class="oneColElsCtrHdr">
+
+    <div id="container">
+      <div id="header">
+
+        <div align="left">
+          <!-- end #header -->
+          <img src="/psd_title.png" alt="Poly Speed Dating" width="820" height="135" /></div>
+      </div>
+      <div id="tabs">
+        <ul>
+          <li><a href="/index.html"><span>Home</span></a></li>
+          <li><a href="/whoweare.html"><span>Who we Are</span></a></li>
+          <li><a href="/faq.html"><span>FAQ</span></a></li>
+          <li><a href="/Register.html"><span>Register<br /></span></a></li>
+          <li><a href="/currentevent.html"><span>Current Event</span></a></li>
+          <li><a href="/pastevents.html"><span>Past Events</span></a></li>
+          <li><a href="mailto:{{ event.info_email|default:"info@polyspeeddating.com" }}"><span>Contact</span></a></li>
+          <li><a href="{% url "account-login" %}"><span>Log In</span></a></li>
+          <li><a href="{{ event.mailing_list_url|default:"http://polyspeeddating.com/mailman/listinfo/psd" }}"><span>Join our Mailing List</span></a></li>
+        </ul>
+      </div>
+
+      <div id="mainContent">
+        <p>&nbsp;</p>
+
+        {% block header %}
+        <h1 align="center">&nbsp;</h1>
+        <h2 align="center">&nbsp;</h2>
+        {% endblock %}
+
+      </td>
+      <td>
+
+        {% block content %}
+        <h1 align="center">Unknown Page</h1>
+
+        You've navigated your way to a page that shouldn't be displayed yet. Secret!
+        Email us at {{ event.info_email|default:"info@polyspeeddating.com" }} with the URL where you saw this and we'll
+        buy you a drink at the next event.
+
+        {% endblock %}
+
+        {% block footer %}
+
+        <p align="center">
+
+          {% if not user.is_anonymous %}
+
+          You are logged in as {{ user.username }} ~
+          <a href="{% url "account-logout" %}">logout</a> ~
+          <a href="{% url "account-view" %}">view registration</a> ~
+          <a href="{% url "password-change" %}">change password</a>
+          {% endif %}
+        </p>
+
+        {% endblock %}
+
+      </td>
+    </div>
+    <div id="footer">
+      <p align="center" class="style4">• <a href="/index.html">Home</a> | <a href="/whoweare.html">Who we are</a> | <a href="/faq.html">FAQ</a> | <a href="/Register.html">Register</a> | <a href="/currentevent.html">Current Event</a> | <a href="/pastevents.html">Past Events</a> | <a href="mailto:{{ event.info_email|default:"info@polyspeeddating.com" }}">Contact</a> | <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">Log In</a> | <a href="{{ event.mailing_list_url|default:"http://polyspeeddating.com/mailman/listinfo/psd" }}"> Join our Mailing List</a> •</p>
+      <!-- end #footer --></div>
+    <!-- end #container --></div>
+</body>
+</html>

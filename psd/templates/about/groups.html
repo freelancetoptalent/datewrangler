@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}All About Groups in PSD{% endblock %}
+
+{% block header%}
+<h2>All About Groups in PSD</h2>
+{% endblock %}
+
+{% block content %}
+
+    <p>As an individual, you can choose whether or not to meet groups. If you
+      are open to meeting groups, you will still have some dates with individuals;
+      you will also potentially have some dates with couples or trios, but
+      only when you match all of them.</p>
+    <p>Groups can also choose whether to ever meet other groups, or only individuals.</p>
+
+    <h2>Example #1 -- Hot Men Action</h2>
+<p>An MM couple are looking for other men to date. Kaden is only interested in
+meeting trans men at PSD. His partner, Rob, is interested in both cis men and
+trans men. They fill out the group form together, and indicate that they are
+also open to meeting groups.
+<p>They will most likely have some dates with
+individual trans men (since those are the men who can match both of them); they
+may also have some dates with couples or trios where at least one person is a
+trans man (so that Kaden has someone to match with) but the others may be cis
+or trans, as long as Rob has at least one mutual match too.
+
+<h2>Example #2 -- The Classic Bi Babe Hunt</h2>
+A MF couple is looking for someone to date both of them.  Then both
+individuals of the group would fill out that they are looking for the same
+gender category or categories. They would only match those who would be interested
+in <em>both</em> members of the group, i.e. bi people.
+<h2>
+
+<h2>Group-group matching</h2>
+
+<p>Groups will only match as long as everybody at the table has a potential match
+(other than the partner or partners they are dating with!). If you are part
+of a group-group date, that doesn't mean everybody in the other group is a
+match for *you* personally. But all of them are a match for you or your partner(s),
+and at least one of them is a match for you.
+
+<p>This aspect of our matching is in flux as we write this (August 2019);
+we will strive to keep this page up to date, but if you have questions
+or concerns about exactly how this will work, we encourage you to get
+in touch with us and make sure your PSD evening will be the way you
+want. Email {{ event.info_email|default:"info@polyspeeddating.com" }}.
+
+
+{% endblock %}

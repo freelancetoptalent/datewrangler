@@ -1,0 +1,97 @@
+{% extends 'dashboard/event_manager.html' %}
+{% load i18n util admin_modify %}
+
+{% block title %}
+PSD Date Entry for {{rr.psdid}}
+{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+
+<a href="../../admin">{% trans "Home" %}</a>
+ &rsaquo;
+<a href="{% url "edit-event" event_name=event_name %}">Edit</a>
+ &rsaquo;
+<a href="{% url "event-manager" event_name=event_name %}">Manage</a>
+ &rsaquo;
+<a href="{%url "next-date-sheet" event_name=event_name %}">Date Entry</a>
+
+</div>
+{% endif %}{% endblock %}
+
+
+
+{% block content %}
+
+
+<h2>Hand Data Entry Sheet for {{ rr.psdid }} at {{ event }}</h2>
+
+
+<form name="handdatesheet" method="post" action="">
+{% csrf_token %}
+<ul>
+
+<table>
+<th>
+<td>PSDID</td>
+<td>Friend?</td>
+<td>Table_Name</td>
+<td>Checked Yes</td>
+
+</th>
+
+
+{% for d in dates %}
+<tr bgcolor={% cycle "#AAAAAA" "#AAAA00" %}>
+
+<td>{{ d.round }}</td>
+<td align="right">{{ d.other_psdid }} </td>
+<td align="left">
+{% if d.friend_date %}
+(F)
+{%endif%}
+</td>
+
+<td align="right">
+{{ d.table }}
+</td>
+
+<td align="center">
+<input name="yes" type="checkbox" value="{{ d.other_psdid }}" {% if d.said_yes %}CHECKED {%endif%}>
+</td>
+
+</tr>
+
+{% endfor %}
+
+
+
+
+</table>
+</ul>
+
+<h2>Cruises:</h2>
+<table>
+<tr>
+{{ cformset.management_form }}
+{% for cform in cformset.forms %}
+
+<td>
+<h3>#{{ forloop.counter }}
+
+<td>
+{{ cform.other_psdid }}
+
+
+
+{% endfor %}
+</tr>
+</table>
+
+<input type="submit" value="submit matching data"></td>
+</form>
+
+{% endblock %}
+
+
+

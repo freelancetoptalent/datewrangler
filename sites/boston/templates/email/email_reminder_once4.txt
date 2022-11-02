@@ -1,0 +1,41 @@
+Dear {{ rr.nickname }} ({{rr.psdid}}),
+
+{% if rr.flagged_NMSMSS %}This is your notice of being partially registered for our upcoming event of {{ event.longname }}. Your registration has been flagged as a currently restricted demographic (of some people looking for women only). Please contact us if this does not seem to be in order.
+{% else %}We look forward to seeing you at {{ event.longname }}! Here are some reminders and final information about the event.
+{% endif %}
+
+
+The event is on {{ event.date|date:"l, F d" }} at {{ event.location }}. Remember that you absolutely need to be there by {{event.deadlinetime|time:"f a"}}; check-in and pre-event socializing starts at {{event.starttime|time:"f a"}}.
+
+Remember, we encourage you to come for dinner at 6pm.  You can sit down to eat, register at your leisure, and wait for us to finalize the dating schedules.  You can also buy beer and cocktails and many other things from the bar (with appropriate ID).{% if rr.flagged %}
+
+Right now, you have fewer than four potential matches. Often this is caused by an error in registration, or there's a small change that could result in more matches. Please contact us so we can have a look at things! We encourage you to come regardless, but if you want a refund instead, you're welcome to one.
+
+If you do attend, and you end up having fewer than four dates for whatever reason, your evening's on us--come see us at the end of the night for a full refund.{% endif %}{% if not rr.paid %}
+
+Now, according to our records, you haven't paid! If that's true, you have two choices: you can log in to your account and pay (see below), or you can pay the walk-in rate at the door, which is much more expensive.  The online discount will end 24 hours before Poly Speed Dating starts.
+
+If, on the contrary, you actually have paid: oops! Send us an email at {{ event.info_email|default:"info@polyspeeddating.com" }} that includes your Poly Speed Dating ID and the details of the Paypal transaction (or however you paid), and we'll sort things out.{% endif %}
+
+Next, here is an automated summary of your registration: {{ rr.geekcode }}
+
+If anything in that summary is wrong or has changed, log in to http://boston.polyspeeddating.com/psd/b/reg/accounts/login/ with the username and password that came in your original registration email, and you can edit your information. If you have any trouble, email us at {{ event.info_email|default:"bostonpsd@polyspeeddating.com" }} and let us know! 
+{% if not rr.flagged %}
+Finally, we want to promise you that if you come to the event and have fewer than four dates--because of demographics, cancellations, cosmic rays, whatever--then your evening is on us; talk to us as the event ends and we'll get you a refund.{% endif %}
+
+The key details again:
+
+* Venue: {{event.location}}, at {{event.address}}
+* The evening goes from {{event.starttime|time:"f"}} to {{event.stoptime|time:"f a"}}.
+* Check-in starts at {{ event.starttime|time:"f a" }}  You _must_ be there by {{ event.deadlinetime|time:"f a" }}
+
+Regarding transportation, Cuisine en Locale has parking.  The main lot is the Dunkin Donut lot across the street from the hall.  There is also a smaller back lot behind the venue.  If you are a Somerville resident, please park on the street.  There is generally ample parking.
+
+For public transportation, we recommend going to Davis Square and either walking or taking the 88 or 90 bus down Highland to Central St.  An 88 leaves Davis at 5:53, 6:12, and 6:31.
+
+See you soon!
+
+Love,
+Your Poly Speed Dating Organizers
+{{ event.info_email|default:"info@polyspeeddating.com" }}
+{{ event.homepage_url }}

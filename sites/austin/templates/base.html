@@ -1,0 +1,23 @@
+{% extends "site_base.html" %}
+
+{% block title %}Poly Speed Dating Austin{% endblock %}
+
+{% block header %}
+<h1 align="center">&nbsp;</h1>
+<h2 align="center">&nbsp;</h2>
+{% endblock %}
+
+
+{% with "celia@sexpositiveculture.org" as default_email  %}
+{% block content %}
+  {{ block.super }}
+{% endblock content %}
+{% endwith %}
+
+
+{% block extra_footer_links %}
+
+    <a href="mailto:{{ event.info_email|default:"celia@sexpositiveculture.org" }}">Contact</a> |
+    <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">Log In</a> |
+    <a href="{{ event.mailing_list_url|default:"http://groups.google.com/group/austinpolyspeeddating/about" }}"> Join our Mailing List</a>
+{% endblock %}

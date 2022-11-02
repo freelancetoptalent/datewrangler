@@ -1,0 +1,105 @@
+{% extends 'admin/base_site.html' %}
+
+{% load i18n util admin_modify admin_static %}
+
+
+{% block header %}
+Individual Break Potential Dates Form for {{rr.psdid}}
+{% endblock %}
+
+
+{% block title %}
+Individual Break Potential Dates Form for {{rr.psdid}}
+{% endblock %}
+
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+
+<a href="{% url "admin:index" %}">{% trans "Home" %}</a>
+ &rsaquo;
+<a href="{% url "admin:index" %}register/regrecord/">RegRecords</a>
+ &rsaquo;
+<a href="{%url "admin:register_regrecord_change" rr.id %}">{{rr.psdid}}</a>
+</div>
+{% endif %}{% endblock %}
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+<!--    <li><a href="/admin/manage/{{ event_name }}">Manage</a></li>-->
+    <li><a href="history/" class="historylink">"History"</a></li>
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+List of forced-breaks of matches and potential matches for {{ rr.psdid }}
+<p>
+Comments: {{ rr.comments }}
+<br>
+Referral: {{ rr.referral }}
+<br>
+Notes: {{ rr.notes }}
+<hr>
+
+<form name="breakmatch" method="post" action="">
+{% csrf_token %}
+<h3>Forced-breaks</h3>
+<i>List of pairs that will never be scheduled as a date.</i>
+<table>
+<tr>
+<td>Break Record</td><td>Un-break</td>
+</tr>
+{% for b in breaklist %}
+<tr>
+<td>{{b}}</td>
+<td><input name="unbreak" type="checkbox" value="{{ b.id }}">
+</td>
+</tr>
+{% endfor %}
+</table>
+<p>
+<hr>
+
+
+<h3>Potential Matches</h3>
+<i>List of potential matches for {{rr.psdid}}.  If empty, be sure to run Make Matrix in event manager</i>
+<table>
+<tr>
+<td>PSDID</td><td>Who</td><td>Match</td><td>Rounds</td><td>Mutual</td><td>break</td>
+</tr>
+
+
+{% for mt in matches %}
+<tr>
+
+
+<tr style="color: {% cycle 'blue' 'black' %}">
+<td><a href="{% url "view-user"  event_name=rr.event psdid=mt.psdid2 %}">{{ mt.psdid2 }}</a></td>
+<td>{{ mt.namestring }}</td>
+<td align="right">
+{{ mt.match }}
+</td>
+<td align="right">
+{%if mt.gay_ok%}G{%endif%}
+{%if mt.str_ok%}S{%endif%}
+</td>
+<td>{% if mt.mutual %}MUTUAL{% endif %}</td>
+<td>
+<input name="break" type="checkbox" value="{{ mt.psdid2 }}">
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+<input type="submit" value="break/unbreak checked">
+</form>
+
+{% endblock %}

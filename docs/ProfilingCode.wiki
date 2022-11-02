@@ -1,0 +1,21 @@
+#summary How to profile and debug our system.
+
+= Introduction =
+
+If you want to profile it yourself, here's what I did:
+
+From within ipython, you can say
+
+ run -p psdmanage.py makematrix macaw2
+
+Since there's no ipython on the server, you can run it from the command line like this:
+
+ python -m cProfile psdmanage.py makematrix ftoast1 | more
+
+or if you want to save the results to analyze later, specify a filename with -o (careful of the order! it's an argument to cProfile, not to Python or to psdmanage.py).
+
+ python -m cProfile -o myoutput psdmanage.py makematrix ftoast1
+
+This saves things in a binary format that the pstats module can manipulate. I've never actually done that, but it's described here:
+
+ http://docs.python.org/library/profile.html

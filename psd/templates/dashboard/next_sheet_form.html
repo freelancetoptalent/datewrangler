@@ -1,0 +1,77 @@
+{% extends 'dashboard/event_manager.html' %}
+{% load util %}
+
+{% block title %}
+PSD Date Entry Stepping Stone
+{% endblock %}
+
+{% block content %}
+
+{% if submitted_psdid %}
+Just submitted date sheet for {{ submitted_psdid }}.
+<p>
+{% for d in dates %}
+<br>{{ d }}
+{% endfor %}
+<p>
+{% if err_message %}
+<b>
+Errors: {{ err_message|safe }}
+</b>
+{% endif %}
+<hr>
+{% endif %}
+
+{% if submitted_psdid %}
+<h2>
+<a href="{% url "date-sheet"  event_name=event psdid=submitted_psdid %}">Re-edit {{submitted_psdid}} </a>
+</h2>
+{% endif %}
+
+<hr>
+
+<hr>
+<pre>{{ progressbar }}</pre>
+<hr>
+
+{% if needs  %}
+<h2>PSDID Jump:</h2>
+{% for pid in needs  %}
+<a href="{% url "date-sheet"  event_name=event psdid=pid %}">{{pid}}</a>
+{% endfor %}
+{% endif %}
+
+
+<hr>
+
+
+
+<h2>or...</h2>
+
+<h2>Enter PSDID to go to form</h2>
+<form action="" method="POST">
+{% csrf_token %}
+            {{ form.as_table }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="submit" value="Go!"></p>
+    </form>
+
+
+
+{% if nextids %}
+<h2>PSDID Jump:</h2>
+{% for pid in nextids %}
+<a href="{% url "date-sheet"  event_name=event psdid=pid %}">{{pid}}</a>
+{% endfor %}
+{% endif %}
+<hr>
+
+{% if nextids %}
+<h2>PSDID Hand-enter:</h2>
+{% for pid in nextids %}
+<a href="{% url "hand-date-sheet" event_name=event psdid=pid %}">{{pid}}</a>
+{% endfor %}
+{% endif %}
+<hr>
+
+
+{% endblock %}

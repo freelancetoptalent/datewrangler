@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Error with Registration{% endblock %}
+
+
+<h1 align="center">
+{% block header %}
+There has been an error with registration.
+{% endblock %}
+</h1>
+
+{% block content %}
+
+<p>{{ message }}</p>
+{% if login_required %}
+    <p>Please <a href="../accounts/login/">login and try again</a>.</p>
+{% endif %}
+<p>
+
+We apologize for any vagueness in the above.  Please try again or contact us.
+<p>
+- the organizers
+
+{% endblock %}

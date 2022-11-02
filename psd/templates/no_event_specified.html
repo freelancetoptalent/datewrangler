@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load util %}
+
+{% block title %}Error with Registration{% endblock %}
+
+
+<h1 align="center">
+{% block header %}
+<h2>No event specified.</h2>
+{% endblock %}
+</h1>
+
+{% block content %}
+No event was specified.  You unfortunately cannot register for PSD in general, but must pick a specific event.
+<p>
+We apologize for any vagueness in the above.  Please try again or contact us.
+<p>
+- the organizers
+
+{% endblock %}

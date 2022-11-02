@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load util %}
+{% load staticfiles %}
+
+
+{% block js %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/dynamic_formset.js' %}"></script>
+{% endblock js %}
+
+
+
+{% block header %}
+    <h1 align="center">Invalid header block</h1>
+    <h2 align="center">for Registration Form</h2>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+<div style="margin:20px 0px 0px 20px;padding:15px 15px 15px 30px;border-style:solid;border-color:rgb(170,170,170);border-width:1px;width:700px">
+<p align="center"><h2>If you have attended prior polyspeeddating events, please <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">log in</a> first before registering.</h2>
+This will allow the system to give you fresh new dates, and not ones you have previously <i>speed-dated</i>.</p>
+<p>If you have forgotten your ID or your password, you can do a
+ password reset by going to the <a href="../reset/">Password Reset
+ Page</a> and handing over your email address.
+ </p>
+</div>
+
+{% block formdescription %}
+This is a generic registration form.  Go nuts.
+{% endblock formdescription %}
+
+{% else %}
+
+{% if admin_mode %}
+<hr>
+<h2>ERROR - IN ADMIN MODE SO YOU SHOULD NOT SEE THIS FORM </h2>
+<h3>
+Fill out form and hit submit.  User and RegRecord will be created or updated as appropriate.
+
+{% if mark_as_here %}
+<p align="center"><b>Note: registration will automatically be marked as here!</b></p>
+{% endif %}
+
+</h3>
+{% else %}
+
+{% if user.is_staff %}
+<h1>YOU ARE LOGGED IN AS AN ADMIN.  LOG OUT BEFORE REGISTERING!</h1>
+{% else %}
+
+{% if is_reregister %}
+Welcome back {{ user }}.  Change anything you like to update your registration.
+{% else %}
+Welcome back {{ user }}!  We are glad to see you registering for another event.  Please register by filling in the form below.
+{% endif %}
+
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% if not admin_mode %}
+{% block regnote %}
+{% endblock regnote %}
+
+<p align="left"><b>What is speed dating?</b> Speed Dating is just a very quick
+way to meet people. You'll sit down for a few minutes with several different
+people, and mark each one "yes" or "no" on a sheet of paper. Then we'll figure
+out who matched. If you say "yes" to someone, you aren't agreeing to go on a
+'real' date or engage in any particular activity with them. But hopefully when
+matches happen, one of you will find the other and say, "Hey, we
+matched! Want to continue that conversation?"</p>
+
+<p align="left"><strong>Instructions: </strong>Fill out this form, and click submit.
+
+{% if not is_reregister %}
+You will then be directed to Paypal where you will be asked to pay the registration
+  fee. </p>
+{% endif %}
+{% endif %}
+
+<hr>
+
+
+{% block form %}
+no form found
+{% endblock form %}
+
+{% endblock content %}
+

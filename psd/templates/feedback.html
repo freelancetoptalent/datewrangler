@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load util %}
+
+{% block title %}
+PSD Feedback Form
+{% endblock %}
+
+{% block content %}
+
+Have something to tell us? Do it!
+
+<form action="" method="POST">
+    {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <p><input type="submit" value="Send"></p>
+    </form>
+
+{% endblock %}

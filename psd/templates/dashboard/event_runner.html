@@ -1,0 +1,67 @@
+{% extends 'dashboard/event_manager.html' %}
+{% load util %}
+
+
+{% block header %}
+Event Runner for {{ event_name }}
+{% endblock %}
+
+{% block content %}
+
+
+
+
+{% if evt.completed %}
+<h1 align="center">~~  EVENT FINISHED ~~ </h1>
+
+{% else %}
+{% if evt.running %}
+<h1 align="center">~~  {{evt.curround}} ~~ </h1>
+{% if evt.curround == evt.numrounds %}
+<h1 align="center">FINAL ROUND!</h1>
+{% endif %}
+
+<p>
+Status: Currently on Round {{evt.curround}} scheduled to end at {{evt.curroundend}}
+</p>
+
+{% else %}
+
+<p>
+    Currently event not started.  If you enter 1 on the form below, and submit, Event will start and Round 1 will begin.
+</p>
+<p>
+    Before you do this, make sure you have closed registration and generated the date matrix file and dating schedule.
+</p>
+
+{% endif %}
+{% endif %}
+
+
+<hr>
+
+
+{% if err_message %}
+<h2>
+{{ err_message|safe }}
+</h2>
+{% endif %}
+
+
+<hr>
+
+
+<form action="" method="POST">
+{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <p><input type="submit" value="{{button_name|default:"Submit"}}"></p>
+</form>
+
+
+
+{% endblock %}
+
+
+

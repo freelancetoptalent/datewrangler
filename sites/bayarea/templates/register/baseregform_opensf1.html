@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load util %}
+
+{% block header %}
+    <h1 align="center">Invalid header block</h1>
+    <h2 align="center">for Registration Form</h2>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+<div style="margin:20px 0px 0px 20px;padding:15px 15px 15px 30px;border-style:solid;border-color:rgb(170,170,170);border-width:1px;width:700px">
+<p align="center"><h2>If you have registered for the Open-SF conference, then you should have received an email with a username and password.
+Please use them to <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">log in</a> first before registering.</h2>
+
+<h2>If you have attended prior polyspeeddating events and already have a PSD ID, then please <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">log in</a> first before registering.</h2>
+
+<p>If you have forgotten your ID or your password, you can do a
+ password reset by going to the <a href="../reset/">Password Reset
+ Page</a> and handing over your email address. The system will then email you your username and a link to reset your password. </p>
+</div>
+
+{% block formdescription %}
+This is a generic registration form.  Go nuts.
+{% endblock formdescription %}
+
+{% else %}
+
+{% if admin_mode %}
+<hr>
+<h2>ADMINISTRATION REGISTRATION/EDIT FORM</h2>
+<h3>
+Fill out form and hit submit.  User and RegRecord will be created or updated as appropriate.
+
+{% if mark_as_here %}
+<p align="center"><b>Note: registration will automatically be marked as here!</b></p>
+{% endif %}
+
+</h3>
+{% else %}
+
+{% if user.is_staff %}
+<h1>YOU ARE LOGGED IN AS AN ADMIN.  LOG OUT BEFORE REGISTERING!</h1>
+{% else %}
+
+{% if is_reregister %}
+Welcome back {{ user }}.  Change anything you like to update your registration.
+{% else %}
+Welcome {{ user }}!  Please register by filling in the form below.
+{% endif %}
+
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% if not admin_mode %}
+{% block regnote %}
+{% endblock regnote %}
+
+<p align="left"><strong>Instructions: </strong>Fill out this form, and click submit.
+
+{% if not is_reregister %}
+You will then be given the option to pay the registration fee if you are not already going to the Open-SF conference. </p>
+{% endif %}
+{% endif %}
+
+<hr>
+
+
+{% block form %}
+no form found
+{% endblock form %}
+
+{% endblock content %}
+

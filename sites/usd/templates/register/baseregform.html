@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load util %}
+
+{% block header %}
+    <h1 align="center">Invalid header block</h1>
+    <h2 align="center">for Registration Form</h2>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+<div style="margin:20px 0px 0px 20px;padding:15px 15px 15px 30px;border-style:solid;border-color:rgb(170,170,170);border-width:1px;width:700px">
+<p align="center"><h2 align="center">If you have attended any of our prior speed dating events, please
+
+<br> <a href="http://{{request.META.HTTP_HOST}}{% url "account-login" %}">* log in *</a>
+<br>
+before registering.</h2>
+This will allow the system to give you fresh new dates, and not ones you have previously <i>speed-dated</i>.</p>
+
+
+<!--you can do a
+ password reset by going to the <a href="../reset/">Password Reset
+ Page</a> and handing over your email address. The system will then email you your username and a link to reset your password. </p> -->
+</div>
+
+
+{% else %}
+
+{% if user.is_staff %}
+<h1>YOU ARE LOGGED IN AS AN ADMIN.  LOG OUT BEFORE REGISTERING!</h1>
+{% else %}
+
+{% if is_reregister %}
+Welcome back {{ user }}.  Change anything you like to update your registration.
+{% else %}
+Welcome back {{ user }}!  We are glad to see you registering for another event.
+{% endif %}
+
+{% endif %}
+{% endif %}
+
+{% block regnote %}
+{% endblock regnote %}
+
+<p align="left"><b>What is speed dating?</b><br> Speed Dating is a very quick
+way to meet a lot of people.
+Over the course of the evening you will go on several short dates with several different
+people.
+After each date, you will mark down a "yes" or "no" on a sheet of paper.
+At the end of the evening, we'll find all the pairs where both parties said "yes" and swap email addresses for those parties.
+If you say "yes" to someone, you aren't necessarily agreeing to go on a
+'real' date or engage in any particular activity with them.
+But hopefully when matches happen, one of you will email the other and say, "Hey, we
+matched! Want to continue that conversation?"</p>
+
+<!--  <p align="left"><strong>Instructions: </strong>Fill out this form, and click submit.  -->
+
+{% block formdescription %}
+This is a generic registration form.  Go nuts.
+{% endblock formdescription %}
+
+{% if not is_reregister %}
+{% endif %}
+<hr>
+
+
+{% block form %}
+no form found
+{% endblock form %}
+
+{% endblock content %}
+
